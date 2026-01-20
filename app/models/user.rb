@@ -9,4 +9,6 @@ class User < ApplicationRecord
 
   # Association for photos
   has_many :photos
+  # Association for albums
+  has_many :albums
 end
