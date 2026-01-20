@@ -10,14 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_20_063626) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_20_120001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "album_photos", force: :cascade do |t|
+    t.bigint "album_id", null: false
+    t.datetime "created_at", null: false
+    t.bigint "photo_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id", "photo_id"], name: "index_album_photos_on_album_id_and_photo_id", unique: true
+    t.index ["album_id"], name: "index_album_photos_on_album_id"
+    t.index ["photo_id"], name: "index_album_photos_on_photo_id"
+  end
+
   create_table "albums", force: :cascade do |t|
+    t.integer "album_sharing", default: 0, null: false
     t.datetime "created_at", null: false
     t.text "description"
-    t.integer "sharing", default: 0, null: false
     t.string "title"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
@@ -37,7 +47,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_20_063626) do
   create_table "photos", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
-    t.integer "sharing", default: 0, null: false
+    t.integer "photo_sharing", default: 0, null: false
     t.string "title"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
@@ -54,6 +64,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_20_063626) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "album_photos", "albums"
+  add_foreign_key "album_photos", "photos"
   add_foreign_key "albums", "users"
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
