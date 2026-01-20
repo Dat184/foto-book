@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_19_015436) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_20_042436) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -20,6 +20,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_19_015436) do
     t.integer "sharing", default: 0, null: false
     t.string "title"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "follows", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "followed_id", null: false
+    t.bigint "follower_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["followed_id"], name: "index_follows_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_follows_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
 
   create_table "photos", force: :cascade do |t|
@@ -39,4 +49,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_19_015436) do
     t.integer "role", default: 0, null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "follows", "users", column: "followed_id"
+  add_foreign_key "follows", "users", column: "follower_id"
 end

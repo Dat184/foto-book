@@ -61,25 +61,17 @@ Cấu hình trong model user
 class User < ApplicationRecord
 
 # 1. CHIỀU ĐI FOLLOW (Active Relationships)
-
 # Định nghĩa mối quan hệ: Những người mà tôi đang follow
-
 # "active_relationships" là tên tự đặt, foreign_key là "follower_id" (tôi là người đi follow)
-
 has_many :active_relationships, class_name: "Relationship",
 foreign_key: "follower_id",
 dependent: :destroy
 
 # Bắc cầu qua active_relationships để lấy danh sách người dùng (following)
-
 # source: :followed nghĩa là lấy cột "followed_id" trong bảng relationship
-
 has_many :following, through: :active_relationships, source: :followed
-
 # 2. CHIỀU ĐƯỢC FOLLOW (Passive Relationships)
-
 # Định nghĩa mối quan hệ: Những người đang follow tôi
-
 # foreign_key là "followed_id" (tôi là người bị follow)
 
 has_many :passive_relationships, class_name: "Relationship",
