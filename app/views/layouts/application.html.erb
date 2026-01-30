@@ -28,6 +28,23 @@
 
   <body>
     <%= render "application/header" %>
-    <%= yield %>
+    <div class="container-fluid main-content my-4">
+      <div class="row">
+        <div class="col-md-2 col-lg-1 col-2">
+          <%= render "application/nav" %>
+        </div>
+        <div class="col-md-10 d-flex col">
+            <div class="walk container">
+              <div class="content d-flex flex-column">
+                <div class="container">
+                  <div class="row g-3 align-items-start h-100">
+                    <%= yield %>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
