@@ -14,4 +14,6 @@ class User < ApplicationRecord
   has_many :photos
   # Association for albums
   has_many :albums
+
+  validates :firstName, :lastName, presence: true
 end
