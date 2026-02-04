@@ -30,6 +30,7 @@
     <%= render "application/header" %>
     <div class="container-fluid main-content my-4">
       <div class="row h-100">
+        <% if user_signed_in? %>
         <div class="col-md-2 col-lg-1 col-2">
           <%= render "application/nav" %>
         </div>
@@ -38,6 +39,13 @@
               <%= yield %>
           </div>
         </div>
+        <% else %>
+          <div class="d-flex col-12">
+            <div class="walk container flex-column">
+                <%= yield %>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
     <p class="notice"><%= notice %></p>

@@ -1,26 +1,18 @@
-<h2>Log in</h2>
+<h1 class="text-center text-primary fw-bold mb-4">Fotobook Login</h1>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
-  </div>
+<div class="account-wall">
 
-  <div class="field">
-    <p><%= f.label :password %></p>
-    <p><%= f.password_field :password, autocomplete: "current-password" %></p>
-  </div>
+  <img
+    class="rounded-circle mx-auto d-block mb-3"
+    src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
+    alt="Profile"
+  />
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <p><%= f.check_box :remember_me %></p>
-      <p><%= f.label :remember_me %></p>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form-signin d-flex flex-column align-items-center" }) do |f| %>
+  <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Email" %>
+  <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "Password" %>
+  <%= f.submit "Log in" , class: "btn btn-primary w-100 mb-3" %>
+  <%= render "devise/shared/links" %>
 <% end %>
+</div>
 
-<%= render "devise/shared/links" %>
