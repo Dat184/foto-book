@@ -1,0 +1,7 @@
+.manage-users {
+  padding: 1% 0;
+}
+
+.table > :not(caption) > * > * {
+  border-bottom: none;
+}

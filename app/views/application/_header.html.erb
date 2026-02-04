@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-primary">
       <div class="container">
-        <a class="navbar-brand text-light fw-bold fs-3" href="#">Fotobook</a>
+        <%= link_to 'Fotobook', root_path, class: "navbar-brand text-light fw-bold fs-3" %>
 
         <form class="d-flex me-auto col-md-5 col-4" role="search">
           <input
@@ -11,25 +11,31 @@
           />
         </form>
 
-        <div class="d-flex dropdown">
-          <a
-            class="nav-link fw-bold fs-5 text-light d-flex align-items-center"
-            href="#"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <img
-              src="https://plus.unsplash.com/premium_vector-1719858611039-66c134efa74d"
-              class="rounded-circle me-2"
-              style="width: 40px; height: 40px; object-fit: cover"
-              alt=""
-            />
-            <p class="m-0 d-none d-lg-block">Username</p>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><a class="dropdown-item" href="#">Log out</a></li>
-          </ul>
-        </div>
+        <% if user_signed_in? %>
+          <% current_user%>
+          <div class="d-flex dropdown">
+            <a
+              class="nav-link fw-bold fs-5 text-light d-flex align-items-center"
+              href="#"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="https://plus.unsplash.com/premium_vector-1719858611039-66c134efa74d"
+                class="rounded-circle me-2"
+                style="width: 40px; height: 40px; object-fit: cover"
+                alt=""
+              />
+              <p class="m-0 d-none d-lg-block"><%= current_user.firstName + " " + current_user.lastName %></p>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><%= button_to 'Log out', destroy_user_session_path, method: :delete, class: "dropdown-item" %></li>
+            </ul>
+          </div>
+
+        <% else%>
+          <%= link_to 'Login', new_user_session_path, class: "nav-link fw-bold fs-5 text-light", "aria-current": "page" %>
+        <% end %>
       </div>
     </nav>
