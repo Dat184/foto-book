@@ -13,10 +13,10 @@
     <tbody class="table-group-divider">
       <% @users.each do |user| %>
       <tr>
-        <td><%= user.firtsName %></td>
+        <td><%= user.firstName %></td>
         <td><%= user.lastName %></td>
         <td><%= user.email %></td>
-        <td><%= user.role %></td>
+        <td><%= user.last_sign_in_at %></td>
         <td
           class="justify-content-center flex-lg-row d-flex flex-column gap-1"
         >

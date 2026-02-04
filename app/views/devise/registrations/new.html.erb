@@ -8,6 +8,17 @@
     <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
   </div>
 
+
+  <div class="field">
+    <p><%= f.label :firstName %></p>
+    <p><%= f.text_field :firstName, autocomplete: "given-name" %></p>
+  </div>
+
+  <div class="field">
+    <p><%= f.label :lastName %></p>
+    <p><%= f.text_field :lastName, autocomplete: "family-name" %></p>
+  </div>
+
   <div class="field">
     <p><%= f.label :password %></p>
     <% if @minimum_password_length %>
