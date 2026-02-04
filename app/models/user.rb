@@ -11,4 +11,10 @@ class User < ApplicationRecord
   has_many :photos
   # Association for albums
   has_many :albums
+
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :firtsName, presence: true
+  validates :lastName, presence: true
+  validates :password, presence: true,
+                       length: { minimum: 6 }
 end
