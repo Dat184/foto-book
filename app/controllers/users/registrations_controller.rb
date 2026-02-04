@@ -11,10 +11,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    super do |user|
-      user.update_column(:firstName, user.firstName.capitalize) if user.firstName.present?
-      user.update_column(:lastName, user.lastName.capitalize) if user.lastName.present?
-    end
+    super
   end
 
   # GET /resource/edit
