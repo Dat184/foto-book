@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  # before_action :set_user, only: %i[ show edit update destroy ]
+  # helper from devise
+  before_action :authenticate_user!
 
   # GET /users or /users.json
   def index
-    @users = User.includes(:following, :followers)
+    @users = User.all
   end
 
   # GET /users/1 or /users/1.json
@@ -59,12 +61,12 @@ class UsersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params.expect(:id))
-    end
+    # def set_user
+    #   @user = User.find(params.expect(:id))
+    # end
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :firtsName, :lastName, :email, :password ])
+      params.expect(user: [ :firstName, :lastName, :email, :password ])
     end
 end
