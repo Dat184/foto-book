@@ -1,42 +1,69 @@
-<%= form_with(model: user) do |form| %>
+<div class="form-content">
+
+
+<%= form_with(model: user, html: { class: "d-flex flex-column align-items-center" }) do |form| %>
   <% if user.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-      <ul>
         <% user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+          <%= error.full_message %>
         <% end %>
-      </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :firstName, style: "display: block" %>
-    <%= form.text_field :firstName %>
+  <div class="avatar mb-3">
+    <img
+      src="https://images.unsplash.com/photo-1761839259494-71caddcdd6b3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt=""
+      class="object-fit-cover rounded-2 w-100 h-100"
+    />
+  </div>
+  <h2 class="fw-bold fs-6 text-primary">Basic Information</h2>
+  <div class="mb-1 d-flex flex-column align-items-start">
+    <%= form.label :firstName %>
+    <%= form.text_field :firstName, class: "form-control", autofocus: true %>
   </div>
 
-  <div>
-    <%= form.label :lastName, style: "display: block" %>
-    <%= form.text_field :lastName %>
+  
+
+  <div class="mb-1 d-flex flex-column align-items-start">
+    <%= form.label :lastName %>
+    <%= form.text_field :lastName, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
+  <div class="mb-1 d-flex flex-column align-items-start">
+    <%= form.label :email %>
+    <%= form.text_field :email, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :password, style: "display: block" %>
-    <%= form.text_field :password %>
-  </div>
 
   <div>
-    <%= form.label :following, style: "display: block" %>
-    <%= form.text_field :following%>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-success mt-3", value: "Save" %>
   </div>
 <% end %>
+
+<%= form_with(model: user, html: { class: "d-flex flex-column align-items-center mt-5" }) do |form| %>
+  <h2 class="fw-bold fs-6 text-primary">Password</h2>
+
+  <div class="mb-1 d-flex flex-column align-items-start">
+    <%= form.label :current_password %>
+    <%= form.password_field :current_password, class: "form-control" %>
+  </div>
+
+  <div class="mb-1 d-flex flex-column align-items-start">
+    <%= form.label :password %>
+    <%= form.password_field :password, class: "form-control", autofocus: true %>
+  </div>
+  
+
+  <div class="mb-1 d-flex flex-column align-items-start">
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.submit class: "btn btn-success mt-3", value: "Save" %>
+  </div>
+<% end %>
+
+</div>

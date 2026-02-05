@@ -12,7 +12,6 @@
         </form>
 
         <% if user_signed_in? %>
-          <% current_user%>
           <div class="d-flex dropdown">
             <a
               class="nav-link fw-bold fs-5 text-light d-flex align-items-center"
@@ -29,7 +28,7 @@
               <p class="m-0 d-none d-lg-block"><%= current_user.firstName + " " + current_user.lastName %></p>
             </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
-              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><%= link_to "Profile", profile_path, class: "dropdown-item" %></li>
               <li><%= button_to 'Log out', destroy_user_session_path, method: :delete, class: "dropdown-item" %></li>
             </ul>
           </div>

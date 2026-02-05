@@ -23,6 +23,8 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= yield :styles %>
+
     <%= javascript_importmap_tags %>
   </head>
 
@@ -48,7 +50,6 @@
         <% end %>
       </div>
     </div>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+   
   </body>
 </html>
