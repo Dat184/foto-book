@@ -1,0 +1,24 @@
+.upload-box {
+  width: 200px;
+  height: 200px;
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+  background-color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.description-input {
+  resize: none;
+  height: 150px;
+}
+
+/* card photos */
+.description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+}

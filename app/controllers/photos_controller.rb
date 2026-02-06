@@ -1,9 +1,10 @@
 class PhotosController < ApplicationController
+  before_action :authenticate_user!, except: %i[ index show ]
   before_action :set_photo, only: %i[ show edit update destroy ]
 
   # GET /photos or /photos.json
   def index
-    @photos = Photo.all
+    @photos = Photo.public_photos
   end
 
   # GET /photos/1 or /photos/1.json
@@ -12,7 +13,7 @@ class PhotosController < ApplicationController
 
   # GET /photos/new
   def new
-    @photo = Photo.new
+    @photo = current_user.photos.new
   end
 
   # GET /photos/1/edit
@@ -21,13 +22,14 @@ class PhotosController < ApplicationController
 
   # POST /photos or /photos.json
   def create
-    @photo = Photo.new(photo_params)
+    @photo = current_user.photos.new(photo_params)
 
     respond_to do |format|
       if @photo.save
         format.html { redirect_to @photo, notice: "Photo was successfully created." }
         format.json { render :show, status: :created, location: @photo }
       else
+        flash.now[:alert] = @photo.errors.full_messages.to_sentence.presence || "Create failed. Please check the form."
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @photo.errors, status: :unprocessable_entity }
       end
@@ -41,6 +43,7 @@ class PhotosController < ApplicationController
         format.html { redirect_to @photo, notice: "Photo was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @photo }
       else
+        flash.now[:alert] = @photo.errors.full_messages.to_sentence.presence || "Update failed. Please check the form."
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @photo.errors, status: :unprocessable_entity }
       end
@@ -60,11 +63,15 @@ class PhotosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_photo
-      @photo = Photo.find(params.expect(:id))
+      @photo = if user_signed_in?
+        current_user.photos.find(params[:id])
+      else
+        Photo.find(params[:id])
+      end
     end
 
     # Only allow a list of trusted parameters through.
     def photo_params
-      params.expect(photo: [ :title, :description ])
+      params.require(:photo).permit(:title, :description, :image, :photo_sharing, :image_cache)
     end
 end

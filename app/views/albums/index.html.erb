@@ -1,16 +1,24 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Albums" %>
 
-<h1>Albums</h1>
-
-<div id="albums">
-  <% @albums.each do |album| %>
-    <%= render album %>
-    <p>
-      <%= link_to "Show this album", album %>
-    </p>
-  <% end %>
+<!-- Photo/Album Toggle -->
+<div class="d-flex justify-content-center mb-4">
+  <div class="btn-group" role="group" aria-label="Content type toggle">
+    <%= link_to photos_path, class: "btn btn-outline-secondary" do %>
+      PHOTO
+    <% end %>
+    <%= link_to albums_path, class: "btn btn-primary active", "aria-current": "page" do %>
+      ALBUM
+    <% end %>
+  </div>
 </div>
 
-<%= link_to "New album", new_album_path %>
+<div id="albums" class="row align-items-start h-auto gy-2">
+  <% @albums.each do |album| %>
+    <div class="col-md-6 col-lg-4">
+      <%= render album %>
+      <p>
+        <%= link_to "Show this album", album, class: "btn btn-sm btn-outline-primary" %>
+      </p>
+    </div>
+  <% end %>
+</div>
