@@ -6,7 +6,14 @@ class UsersController < ApplicationController
   # GET /profile
   def profile
     @user = current_user
+    # render :edit_profile
     render :profile
+  end
+
+  # GET /profile/edit
+  def edit_profile
+    @user = current_user
+    render :edit_profile
   end
 
   # GET /users or /users.json

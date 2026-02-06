@@ -41,7 +41,7 @@
   </div>
 <% end %>
 
-<%= form_with(model: user, url: registration_path(:user), method: :put, data: { turbo: false }, html: { class: "d-flex flex-column align-items-center mt-5" }) do |form| %>
+<%= form_with(model: user, url: registration_path(:user), method: :patch, data: { turbo: false }, html: { class: "d-flex flex-column align-items-center mt-5" }) do |form| %>
   <h2 class="fw-bold fs-6 text-primary">Password</h2>
 
   <div class="mb-1 d-flex flex-column align-items-start">

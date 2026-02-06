@@ -1,0 +1,15 @@
+
+/* photos */
+.photos {
+  height: 250px;
+  width: 250px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+@media (max-width: 370px) {
+  .photos {
+    height: 150px;
+    width: 150px;
+  }
+}

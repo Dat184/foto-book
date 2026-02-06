@@ -23,8 +23,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   def update
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+
+    update_params = account_update_params
+    if update_params[:current_password].present? && (update_params[:password].blank? || update_params[:password_confirmation].blank?)
+      redirect_to edit_profile_path,
+                  alert: "Password and confirmation can't be blank",
+                  status: :see_other
+      return
+    end
+
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
-    resource_updated = update_resource(resource, account_update_params)
+    resource_updated = update_resource(resource, update_params)
 
     if resource_updated
       yield resource if block_given?
@@ -33,7 +42,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       redirect_to profile_path, notice: "Password updated", status: :see_other
     else
       message = resource.errors.full_messages.to_sentence
-      redirect_to profile_path,
+      redirect_to edit_profile_path,
                   alert: (message.present? ? message : "Password update failed"),
                   status: :see_other
     end

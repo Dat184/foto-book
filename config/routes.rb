@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   get "profile" => "users#profile", as: :profile
+  get "profile/edit" => "users#edit_profile", as: :edit_profile
 
   resources :albums
   resources :photos
