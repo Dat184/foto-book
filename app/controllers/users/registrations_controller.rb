@@ -30,11 +30,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
       yield resource if block_given?
       set_flash_message_for_update(resource, prev_unconfirmed_email)
       bypass_sign_in resource, scope: resource_name
-      redirect_to profile_path, notice: "Password updated"
+      redirect_to profile_path, notice: "Password updated", status: :see_other
     else
-      # @user = current_user
-      redirect_to profile_path, status: :unprocessable_entity
-      # render "users/profile", status: :unprocessable_entity
+      message = resource.errors.full_messages.to_sentence
+      redirect_to profile_path,
+                  alert: (message.present? ? message : "Password update failed"),
+                  status: :see_other
     end
   end
 
