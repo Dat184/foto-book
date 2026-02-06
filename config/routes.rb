@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations" }
   root to: "home#index"
+
+  get "profile" => "users#profile", as: :profile
+  get "profile/edit" => "users#edit_profile", as: :edit_profile
+
   resources :albums
   resources :photos
   resources :users

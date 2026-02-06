@@ -2,8 +2,8 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [ :create ]
-  layout 'auth'
-  # before_action :configure_account_update_params, only: [:update]
+  # layout "auth"
+  before_action :configure_account_update_params, only: [ :update ]
 
   # GET /resource/sign_up
   def new
@@ -16,14 +16,37 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+    super
+  end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+
+    update_params = account_update_params
+    if update_params[:current_password].present? && (update_params[:password].blank? || update_params[:password_confirmation].blank?)
+      redirect_to edit_profile_path,
+                  alert: "Password and confirmation can't be blank",
+                  status: :see_other
+      return
+    end
+
+    prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+    resource_updated = update_resource(resource, update_params)
+
+    if resource_updated
+      yield resource if block_given?
+      set_flash_message_for_update(resource, prev_unconfirmed_email)
+      bypass_sign_in resource, scope: resource_name
+      redirect_to profile_path, notice: "Password updated", status: :see_other
+    else
+      message = resource.errors.full_messages.to_sentence
+      redirect_to edit_profile_path,
+                  alert: (message.present? ? message : "Password update failed"),
+                  status: :see_other
+    end
+  end
 
   # DELETE /resource
   # def destroy
@@ -47,17 +70,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-  # end
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :password, :password_confirmation, :current_password ])
+  end
 
   # The path used after sign up.
-  def after_sign_up_path_for(resource)
-    super(resource)
-  end
+  # def after_sign_up_path_for(resource)
+  #   super(resource)
+  # end
 
   # The path used after sign up for inactive accounts.
   def after_inactive_sign_up_path_for(resource)
-    super(resource)
+    new_user_session_path
   end
 end

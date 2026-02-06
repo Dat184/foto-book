@@ -23,6 +23,7 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+
     <%= javascript_importmap_tags %>
   </head>
 
@@ -48,7 +49,34 @@
         <% end %>
       </div>
     </div>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    
+
+
+    <%# Flash Toasts %>
+    <% if notice.present? || alert.present? %>
+      <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div
+          id="flashToast"
+          class="toast align-items-center text-bg-<%= alert.present? ? "danger" : "success" %> border-0"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+          data-bs-autohide="true"
+          data-bs-delay="4000"
+        >
+          <div class="d-flex">
+            <div class="toast-body">
+              <% if notice.present? %>
+                <div><%= notice %></div>
+              <% end %>
+              <% if alert.present? %>
+                <div><%= alert %></div>
+              <% end %>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </body>
 </html>
