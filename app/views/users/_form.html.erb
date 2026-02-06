@@ -4,9 +4,8 @@
 <%= form_with(model: user, html: { class: "d-flex flex-column align-items-center" }) do |form| %>
   <% if user.errors.any? %>
     <div style="color: red">
-
-        <% user.errors.each do |error| %>
-          <%= error.full_message %>
+        <% user.errors.full_messages.each do |message| %>
+          <%= message %>
         <% end %>
     </div>
   <% end %>

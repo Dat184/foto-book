@@ -1,14 +1,14 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
-  # layout :layout_by_resource
+  layout :layout_by_resource
 
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
 
-  # private
+  private
 
-  # def layout_by_resource
-  #   devise_controller? ? "auth" : "application"
-  # end
+  def layout_by_resource
+    devise_controller? ? "auth" : "application"
+  end
 end
