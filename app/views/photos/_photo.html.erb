@@ -1,63 +1,55 @@
-<div id="<%= dom_id photo %>" class="col-12 col-sm-6">
-
-  <div class="card">
-                  <div class="row g-0">
-                    <div class="col-lg-6">
-                      <img
-                        src="https://images.unsplash.com/photo-1761850648640-2ee5870ee883"
-                        class="img-fluid object-fit-cover h-100"
-                      />
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="card-body d-flex flex-column px-3 py-1">
-                        <div
-                          class="d-flex align-items-center mb-3 col-md-8 w-100"
-                        >
-                          <img
-                            src="https://plus.unsplash.com/premium_vector-1719858611039-66c134efa74d"
-                            class="rounded-circle me-2"
-                            style="width: 38px; height: 38px; object-fit: cover"
-                            alt=""
-                          />
-                          <h5 class="fw-bold">Dat Nguyen</h5>
-                        </div>
-                        <h5 class="card-title fw-bold text-start">
-                          Card title
-                        </h5>
-                        <p class="card-text description text-start">
-                          Share your memorable moments with friends and family
-                          on Fotobook. Create albums, upload photos, and connect
-                          with loved ones in a vibrant community. Share your
-                          memorable moments with friends and family on Fotobook.
-                          Create albums, upload photos, and connect with loved
-                          ones in a vibrant community.
-                        </p>
-
-                        <div
-                          class="d-flex justify-content-between align-items-center mt-auto"
-                        >
-                          <div class="d-flex align-items-center">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              fill="currentColor"
-                              class="bi bi-heart-fill text-danger"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
-                              />
-                            </svg>
-                            <span class="ms-1 small text-muted">142</span>
-                          </div>
-                          <span class="small text-muted">2 days ago</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-  
-
+<div id="<%= dom_id photo %>" class="col-12 col-sm-6 mb-3">
+  <div class="card h-100">
+    <div class="row g-0 h-100">
+      <!-- Image container with fixed aspect ratio -->
+      <div class="col-lg-6">
+        <div class="ratio ratio-4x3 h-100">
+          <%= image_tag photo.image.url, class: "img-fluid object-fit-cover w-100 h-100 rounded-start" %>
+        </div>
+      </div>
+      <!-- Content -->
+      <div class="col-lg-6 d-flex">
+        <div class="card-body d-flex flex-column px-3 py-2">
+          <!-- User info -->
+          <div class="d-flex align-items-center mb-2">
+            <img
+              src="https://plus.unsplash.com/premium_vector-1719858611039-66c134efa74d"
+              class="rounded-circle me-2 flex-shrink-0 photo-card-avatar"
+              alt="Avatar"
+            />
+            <span class="fw-bold text-truncate"><%= photo.user.firstName + " " + photo.user.lastName %></span>
+          </div>
+          <!-- Title -->
+          <h6 class="card-title fw-bold text-start mb-1">
+            <%= photo.title %>
+          </h6>
+          <!-- Description with line clamp -->
+          <p class="card-text text-start text-muted small flex-grow-1 photo-card-description">
+            <%= photo.description %>
+          </p>
+          <!-- Footer -->
+          <div class="d-flex justify-content-between align-items-center mt-auto pt-2">
+            <div class="d-flex align-items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-heart-fill text-danger"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
+                />
+              </svg>
+              <span class="ms-1 small text-muted">142</span>
+            </div>
+            <span class="small text-muted"><%= photo.created_at.strftime("%d %b %Y") %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+

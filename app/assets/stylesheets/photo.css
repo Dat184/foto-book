@@ -15,10 +15,26 @@
   height: 150px;
 }
 
-/* card photos */
+/* Card photos */
+.photo-card-avatar {
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
+}
+
+.photo-card-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+}
+
+/* Legacy description class */
 .description {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
