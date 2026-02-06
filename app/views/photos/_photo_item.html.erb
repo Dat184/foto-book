@@ -1,0 +1,12 @@
+<div class="col mt-3">
+    <div class="photo-wrapper position-relative">
+      <img
+        src="<%= photo.image_url %>"
+        class="object-fit-cover photos"
+        alt="photos"
+      />
+      <% if photo.photo_sharing == "private" %>
+        <i class="fa-solid fa-lock position-absolute top-0 end-0 p-2 me-2 "></i>
+      <% end %>
+    </div>
+  </div>

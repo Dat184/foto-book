@@ -17,24 +17,24 @@
     >
     <%= link_to "Edit Profile", edit_profile_path, class: "btn btn-outline-primary btn-sm rounded-pill px-3 fw-bold" %>
     </div>
-    <h1 class="fw-bold mb-2">Hansford Nguyen</h1>
+    <h1 class="fw-bold mb-2"><%= @user.firstName + " " + @user.lastName %></h1>
     <div
       class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 gap-md-4 text-secondary"
     >
       <a href="#" class="text-decoration-none">
-        <span class="fw-bold text-dark fs-5">108</span>
+        <span class="fw-bold text-dark fs-5"><%= @user.photos.count %></span>
         <span class="small text-secondary">PHOTOS</span>
       </a>
       <a href="#" class="text-decoration-none">
-        <span class="fw-bold text-dark fs-5">43</span>
+        <span class="fw-bold text-dark fs-5"><%= @user.albums.count %></span>
         <span class="small text-secondary">ALBUMS</span>
       </a>
       <a href="#" class="text-decoration-none">
-        <span class="fw-bold text-dark fs-5">22</span>
+        <span class="fw-bold text-dark fs-5"><%= @user.following.count %></span>
         <span class="small text-secondary">FOLLOWINGS</span>
       </a>
       <a href="#" class="text-decoration-none">
-        <span class="fw-bold text-dark fs-5">13</span>
+        <span class="fw-bold text-dark fs-5"><%= @user.followers.count %></span>
         <span class="small text-secondary">FOLLOWERS</span>
       </a>
     </div>
@@ -47,76 +47,5 @@
 <div
   class="row row-cols-lg-3 row-cols-md-2 row-cols-xl-4 row-cols-1 mt-5"
 >
-  <div class="col mt-3">
-    <div class="photo-wrapper">
-      <img
-        src="https://images.unsplash.com/photo-1761850648640-2ee5870ee883"
-        class="object-fit-cover photos"
-        alt="photos"
-      />
-      <i
-        class="fa-solid fa-lock position-absolute top-0 end-0 p-2 me-2 mt-2"
-      ></i>
-    </div>
-  </div>
-  <div class="col mt-3">
-    <div class="photo-wrapper">
-      <img
-        src="https://images.unsplash.com/photo-1761850648640-2ee5870ee883"
-        class="object-fit-cover photos"
-        alt="photos"
-      />
-      <i
-        class="fa-solid fa-lock position-absolute top-0 end-0 p-2 me-2 mt-2"
-      ></i>
-    </div>
-  </div>
-  <div class="col mt-3">
-    <div class="photo-wrapper">
-      <img
-        src="https://images.unsplash.com/photo-1761850648640-2ee5870ee883"
-        class="object-fit-cover photos"
-        alt="photos"
-      />
-      <i
-        class="fa-solid fa-lock position-absolute top-0 end-0 p-2 me-2 mt-2"
-      ></i>
-    </div>
-  </div>
-  <div class="col mt-3">
-    <div class="photo-wrapper">
-      <img
-        src="https://images.unsplash.com/photo-1761850648640-2ee5870ee883"
-        class="object-fit-cover photos"
-        alt="photos"
-      />
-      <i
-        class="fa-solid fa-lock position-absolute top-0 end-0 p-2 me-2 mt-2"
-      ></i>
-    </div>
-  </div>
-  <div class="col mt-3">
-    <div class="photo-wrapper">
-      <img
-        src="https://images.unsplash.com/photo-1761850648640-2ee5870ee883"
-        class="object-fit-cover photos"
-        alt="photos"
-      />
-      <i
-        class="fa-solid fa-lock position-absolute top-0 end-0 p-2 me-2 mt-2"
-      ></i>
-    </div>
-  </div>
-  <div class="col mt-3">
-    <div class="photo-wrapper">
-      <img
-        src="https://images.unsplash.com/photo-1761850648640-2ee5870ee883"
-        class="object-fit-cover photos"
-        alt="photos"
-      />
-      <i
-        class="fa-solid fa-lock position-absolute top-0 end-0 p-2 me-2 mt-2"
-      ></i>
-    </div>
-  </div>
+  <%= render partial: "photos/photo_item", collection: @user.photos, as: :photo %>
 </div>
