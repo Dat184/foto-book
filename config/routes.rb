@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   get "profile" => "users#profile", as: :profile
   get "profile/edit" => "users#edit_profile", as: :edit_profile
+  get "users/:id/profile" => "users#public_profile", as: :public_profile
+  post "users/:id/follow" => "users#follow", as: :follow_user
+  delete "users/:id/unfollow" => "users#unfollow", as: :unfollow_user
 
   resources :albums
   resources :photos
