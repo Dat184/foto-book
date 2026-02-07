@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   # GET /profile
   def profile
     @user = current_user
-    # render :edit_profile
+    @is_my_profile = true
     render :profile
   end
 
@@ -14,6 +14,33 @@ class UsersController < ApplicationController
   def edit_profile
     @user = current_user
     render :edit_profile
+  end
+
+  # GET /users/:id/profile
+  def public_profile
+    @user = User.find(params[:id])
+    if @user == current_user
+      @is_my_profile = true
+    else
+      @is_my_profile = false
+    end
+    render :profile
+  end
+
+  # POST /users/:id/follow
+  def follow
+    @user = User.find(params[:id])
+    unless current_user == @user || current_user.following.include?(@user)
+      current_user.following << @user
+    end
+    redirect_to public_profile_path(@user), notice: "You are now following #{@user.firstName}"
+  end
+
+  # DELETE /users/:id/unfollow
+  def unfollow
+    @user = User.find(params[:id])
+    current_user.following.delete(@user)
+    redirect_to public_profile_path(@user), notice: "You have unfollowed #{@user.firstName}"
   end
 
   # GET /users or /users.json
