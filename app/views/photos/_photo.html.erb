@@ -1,9 +1,14 @@
 <div id="<%= dom_id photo %>" class="col-12 col-sm-6 mb-3">
   <div class="card h-100">
     <div class="row g-0 h-100">
-      <!-- Image container with fixed aspect ratio -->
       <div class="col-lg-6">
-        <div class="ratio ratio-4x3 h-100">
+        <div class="ratio ratio-4x3 h-100" 
+             role="button"
+             data-bs-toggle="modal" 
+             data-bs-target="#photoModal"
+             data-photo-title="<%= photo.title %>"
+             data-photo-image="<%= photo.image.url %>"
+             data-photo-description="<%= photo.description %>">
           <%= image_tag photo.image.url, class: "img-fluid object-fit-cover w-100 h-100 rounded-start" %>
         </div>
       </div>

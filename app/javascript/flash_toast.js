@@ -4,16 +4,9 @@ const FlashToast = {
   init() {
     const handler = this.show.bind(this);
 
-    // Initial page load
     document.addEventListener("DOMContentLoaded", handler);
-
-    // Turbo navigation (full page transitions)
     document.addEventListener("turbo:load", handler);
-
-    // Turbo render (partial page updates, like form validation errors)
     document.addEventListener("turbo:render", handler);
-
-    // Turbo frame updates
     document.addEventListener("turbo:frame-render", handler);
   },
 
@@ -21,9 +14,7 @@ const FlashToast = {
     const el = document.getElementById(this.toastId);
     if (!el) return;
 
-    // Reset shown flag on new page renders
     if (el.dataset.shown === "true") {
-      // Check if it's a new toast by comparing content
       const currentContent = el.querySelector(".toast-body")?.innerHTML || "";
       if (el.dataset.lastContent === currentContent) return;
     }

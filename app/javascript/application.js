@@ -3,5 +3,7 @@ import "@hotwired/turbo-rails";
 import "controllers";
 
 import FlashToast from "flash_toast";
+import PhotoModal from "photo_modal";
 
 FlashToast.init();
+PhotoModal.init();
