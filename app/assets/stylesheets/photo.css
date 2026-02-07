@@ -15,6 +15,10 @@
   height: 150px;
 }
 
+#photos {
+  flex: 0 !important;
+}
+
 /* Card photos */
 .photo-card-avatar {
   width: 38px;
