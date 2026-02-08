@@ -26,7 +26,7 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       if @photo.save
-        format.html { redirect_to @photo, notice: "Photo was successfully created." }
+        format.html { redirect_to profile_path, notice: "Photo was successfully created." }
         format.json { render :show, status: :created, location: @photo }
       else
         flash.now[:alert] = @photo.errors.full_messages.to_sentence.presence || "Create failed. Please check the form."
@@ -40,7 +40,7 @@ class PhotosController < ApplicationController
   def update
     respond_to do |format|
       if @photo.update(photo_params)
-        format.html { redirect_to @photo, notice: "Photo was successfully updated.", status: :see_other }
+        format.html { redirect_to profile_path, notice: "Photo was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @photo }
       else
         flash.now[:alert] = @photo.errors.full_messages.to_sentence.presence || "Update failed. Please check the form."
