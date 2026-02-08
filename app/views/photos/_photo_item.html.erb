@@ -15,7 +15,9 @@
     <% if photo.photo_sharing == "private" %>
       <i class="fa-solid fa-lock position-absolute top-0 end-0 m-2 p-1 bg-dark rounded-circle text-white fs-6"></i>
     <% end %>
+    <% if is_my_profile %>
       <%= link_to 'edit', edit_photo_path(photo), class: "position-absolute bottom-0 end-0 rounded-pill px-2 m-2 fw-bold bg-light bg-opacity-50 text-decoration-none text-dark", data: { turbo_prefetch: false } %>
+    <% end %>
     </div>
     <p><%= photo.title %></p>
   </div>

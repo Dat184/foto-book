@@ -35,9 +35,7 @@
       ) %>
     </div>
 
-    <div class="col-12 mt-3 text-start">
-    <%= form.submit "Save", class: "btn btn-success px-4 fw-bold" %>
-  </div>
+    
   </div>
 
     
@@ -49,5 +47,15 @@
     </div>
   </div>
 
-  
+  <div class="col-12">
+    <%= form.submit "Save", class: "btn btn-success px-4 fw-bold" %>
+  </div>
+<% end %>
+
+<% if photo.persisted? %>
+  <div class="photo-form-actions">
+    <%= button_to "Delete", photo_path(photo), method: :delete, 
+        form: { data: { turbo: "false", double_confirm: "true" } },
+        class: "btn btn-danger px-3 fw-bold mt-3" %>
+  </div>
 <% end %>

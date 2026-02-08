@@ -57,7 +57,7 @@
 <div
   class="row row-cols-lg-3 row-cols-md-2 row-cols-xl-4 row-cols-1 mt-5"
 >
-  <%= render partial: "photos/photo_item", collection: @user.photos, as: :photo %>
+  <%= render partial: "photos/photo_item", collection: @user.photos, as: :photo, locals: { is_my_profile: @is_my_profile } %>
 </div>
 
 

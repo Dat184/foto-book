@@ -47,3 +47,7 @@
   word-break: break-word;
   overflow-wrap: break-word;
 }
+
+form.row {
+  flex: 0 !important;
+}
