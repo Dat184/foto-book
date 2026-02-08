@@ -1,12 +1,22 @@
 <div class="col mt-3">
-    <div class="photo-wrapper position-relative">
-      <img
-        src="<%= photo.image_url %>"
-        class="object-fit-cover photos"
-        alt="<%= photo.title %>"
-      />
-      <% if photo.photo_sharing == "private" %>
-        <i class="fa-solid fa-lock position-absolute top-0 end-0 m-2 p-1 bg-dark rounded-circle text-white fs-6"></i>
-      <% end %>
+  <div class="photo-wrapper ">
+    <div class="position-relative">
+
+    <img
+      src="<%= photo.image_url %>"
+      class="object-fit-cover photos"
+      role="button"
+        data-bs-toggle="modal" 
+        data-bs-target="#photoModal"
+        data-photo-title="<%= photo.title %>"
+        data-photo-image="<%= photo.image.url %>"
+        data-photo-description="<%= photo.description %>"
+    />
+    <% if photo.photo_sharing == "private" %>
+      <i class="fa-solid fa-lock position-absolute top-0 end-0 m-2 p-1 bg-dark rounded-circle text-white fs-6"></i>
+    <% end %>
+      <%= link_to 'edit', edit_photo_path(photo), class: "position-absolute bottom-0 end-0 rounded-pill px-2 m-2 fw-bold bg-light bg-opacity-50 text-decoration-none text-dark", data: { turbo_prefetch: false } %>
     </div>
+    <p><%= photo.title %></p>
   </div>
+</div>

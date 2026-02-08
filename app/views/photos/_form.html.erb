@@ -20,10 +20,19 @@
         class: "form-select" %>
     </div>
 
-    <div class="mb-3 mt-4">
-      <%= form.file_field :image %>
+    <div class="mb-3 mt-4" data-controller="image-preview">
+      <%= form.file_field :image, accept: "image/*",
+        data: {
+          image_preview_target: "input",
+          action: "change->image-preview#preview"
+        } %>
       <%= form.hidden_field :image_cache %>
-      <%= image_tag(photo.image.url, width: 120) if photo.image.present? %>
+      <%= image_tag(
+        photo.image.url || "",
+        class: "img-fluid mt-2",
+        data: { image_preview_target: "output" },
+        style: photo.image.present? ? "" : "display: none;"
+      ) %>
     </div>
 
     <div class="col-12 mt-3 text-start">
