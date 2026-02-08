@@ -29,7 +29,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
               <li><%= link_to "Profile", profile_path, class: "dropdown-item", data: { turbo_prefetch: false } %></li>
-              <li><%= button_to 'Log out', destroy_user_session_path, method: :delete, class: "dropdown-item", data: { turbo_prefetch: false } %></li>
+              <li><%= button_to 'Log out', destroy_user_session_path, method: :delete, class: "dropdown-item", data: { turbo: false } %></li>
             </ul>
           </div>
 

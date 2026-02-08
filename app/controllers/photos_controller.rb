@@ -4,7 +4,12 @@ class PhotosController < ApplicationController
 
   # GET /photos or /photos.json
   def index
-    @photos = Photo.public_photos.includes(:user).order(created_at: :desc)
+    @pagy, @photos = pagy(:countless, Photo.public_photos.includes(:user).order(created_at: :desc), limit: 10)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   # GET /photos/1 or /photos/1.json
