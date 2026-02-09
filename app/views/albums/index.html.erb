@@ -12,11 +12,6 @@
 
 <div id="albums" class="row align-items-start h-auto gy-2">
   <% @albums.each do |album| %>
-    <div class="col-md-6 col-lg-4">
       <%= render album %>
-      <p>
-        <%= link_to "Show this album", album, class: "btn btn-sm btn-outline-primary" %>
-      </p>
-    </div>
   <% end %>
 </div>
