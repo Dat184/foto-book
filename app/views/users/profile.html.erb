@@ -21,17 +21,19 @@
     <% end %>
     </div>
     <h1 class="fw-bold mb-2"><%= @user.firstName + " " + @user.lastName %></h1>
+    <% photos_tab_path = @is_my_profile ? profile_path(tab: "photos") : public_profile_path(@user, tab: "photos") %>
+    <% albums_tab_path = @is_my_profile ? profile_path(tab: "albums") : public_profile_path(@user, tab: "albums") %>
     <div
       class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 gap-md-4 text-secondary"
     >
-      <a href="#" class="text-decoration-none">
+      <%= link_to photos_tab_path, class: "text-decoration-none", data: { turbo_prefetch: false } do %>
         <span class="fw-bold text-dark fs-5"><%= @user.photos_count %></span>
         <span class="small text-secondary">PHOTOS</span>
-      </a>
-      <a href="#" class="text-decoration-none">
+      <% end %>
+      <%= link_to albums_tab_path, class: "text-decoration-none", data: { turbo_prefetch: false } do %>
         <span class="fw-bold text-dark fs-5"><%= @user.albums_count %></span>
         <span class="small text-secondary">ALBUMS</span>
-      </a>
+      <% end %>
       <a href="#" class="text-decoration-none">
         <span class="fw-bold text-dark fs-5"><%= @user.following_count %></span>
         <span class="small text-secondary">FOLLOWINGS</span>
@@ -45,14 +47,22 @@
 </div>
 
 <% if @is_my_profile %>
-  <%= link_to 'Add photos', new_photo_path, class: "mt-5 align-self-md-end align-self-center btn btn-success rounded-pill btn-add-photos", data: { turbo_prefetch: false } %>
+  <% if @active_tab == "albums" %>
+    <%= link_to "Add album", new_album_path, class: "mt-5 align-self-md-end align-self-center btn btn-success rounded-pill btn-add-photos", data: { turbo_prefetch: false } %>
+  <% else %>
+    <%= link_to "Add photos", new_photo_path, class: "mt-5 align-self-md-end align-self-center btn btn-success rounded-pill btn-add-photos", data: { turbo_prefetch: false } %>
+  <% end %>
 <% end %>
 
 <%# body content here %>
 <div
   class="row row-cols-lg-3 row-cols-md-2 row-cols-xl-4 row-cols-1 mt-5"
 >
-  <%= render partial: "photos/photo_item", collection: @user.photos, as: :photo, locals: { is_my_profile: @is_my_profile } %>
+  <% if @active_tab == "albums" %>
+    <%= render partial: "albums/album_item", collection: @user.albums, as: :album, locals: { is_my_profile: @is_my_profile } %>
+  <% else %>
+    <%= render partial: "photos/photo_item", collection: @user.photos, as: :photo, locals: { is_my_profile: @is_my_profile } %>
+  <% end %>
 </div>
 
 
