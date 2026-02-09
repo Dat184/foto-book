@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_03_102308) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_09_012551) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -47,6 +47,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_03_102308) do
   create_table "photos", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
+    t.string "image"
     t.integer "photo_sharing", default: 0, null: false
     t.string "title"
     t.datetime "updated_at", null: false
@@ -55,6 +56,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_03_102308) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.integer "albums_count", default: 0, null: false
+    t.string "avatar"
     t.datetime "confirmation_sent_at"
     t.string "confirmation_token"
     t.datetime "confirmed_at"
@@ -62,8 +65,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_03_102308) do
     t.string "email"
     t.string "encrypted_password", default: "", null: false
     t.string "firstName"
+    t.integer "followers_count", default: 0, null: false
+    t.integer "following_count", default: 0, null: false
     t.string "lastName"
     t.datetime "last_sign_in_at"
+    t.integer "photos_count", default: 0, null: false
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"

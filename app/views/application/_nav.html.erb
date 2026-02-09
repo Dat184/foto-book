@@ -31,12 +31,10 @@
                 <div class="offcanvas-body">
                   <ul class="navbar-nav flex-column">
                     <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#"
-                        >Feeds</a
-                      >
+                      <%= link_to 'Feeds', photos_feed_path, class: "nav-link active", "aria-current": "page", data: { turbo_prefetch: false } %>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">Discovery</a>
+                      <%= link_to 'Discovery', photos_discovery_path, class: "nav-link", data: { turbo_prefetch: false } %>
                     </li>
                     
                   </ul>

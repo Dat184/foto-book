@@ -9,6 +9,10 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/bec6f86d94.js"
+      crossorigin="anonymous"
+    ></script>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -54,29 +58,7 @@
 
     <%# Flash Toasts %>
     <% if notice.present? || alert.present? %>
-      <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div
-          id="flashToast"
-          class="toast align-items-center text-bg-<%= alert.present? ? "danger" : "success" %> border-0"
-          role="alert"
-          aria-live="assertive"
-          aria-atomic="true"
-          data-bs-autohide="true"
-          data-bs-delay="4000"
-        >
-          <div class="d-flex">
-            <div class="toast-body">
-              <% if notice.present? %>
-                <div><%= notice %></div>
-              <% end %>
-              <% if alert.present? %>
-                <div><%= alert %></div>
-              <% end %>
-            </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-          </div>
-        </div>
-      </div>
+      <%= render "application/toast" %>
     <% end %>
   </body>
 </html>
