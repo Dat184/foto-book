@@ -4,12 +4,7 @@
   <div
     class="col-md-3 d-flex flex-column align-items-center mb-4 mb-md-0 me-md-4"
   >
-    <img
-      src="https://plus.unsplash.com/premium_vector-1719858611039-66c134efa74d"
-      class="rounded-circle object-fit-cover"
-      style="width: 120px; height: 120px"
-      alt="Profile Avatar"
-    />
+    <%= image_tag avatar_url(@user), class: "rounded-circle object-fit-cover", style: "width: 120px; height: 120px", alt: "Profile Avatar" %>
   </div>
   <div class="w-100">
     <div
