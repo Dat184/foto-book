@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   post "users/:id/follow" => "users#follow", as: :follow_user
   delete "users/:id/unfollow" => "users#unfollow", as: :unfollow_user
 
+  # photos routes
+  get "photos/feed" => "photos#feed", as: :photos_feed
+  get "photos/discovery" => "photos#discovery", as: :photos_discovery
+
   resources :albums
   resources :photos
   resources :users

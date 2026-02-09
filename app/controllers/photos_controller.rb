@@ -4,6 +4,7 @@ class PhotosController < ApplicationController
 
   # GET /photos or /photos.json
   def index
+    # @pagy, @photos = pagy(:countless, Photo.public_photos_from_following(current_user).includes(:user).order(created_at: :desc), limit: 10)
     @pagy, @photos = pagy(:countless, Photo.public_photos.includes(:user).order(created_at: :desc), limit: 10)
 
     respond_to do |format|
@@ -12,6 +13,23 @@ class PhotosController < ApplicationController
     end
   end
 
+  def feed
+    @pagy, @photos = pagy(:countless, Photo.public_photos_from_following(current_user).includes(:user).order(created_at: :desc), limit: 10)
+
+    respond_to do |format|
+      format.html { render :index }
+      format.turbo_stream
+    end
+  end
+
+  def discovery
+    @pagy, @photos = pagy(:countless, Photo.public_photos.includes(:user).order(created_at: :desc), limit: 10)
+
+    respond_to do |format|
+      format.html { render :index }
+      format.turbo_stream
+    end
+  end
   # GET /photos/1 or /photos/1.json
   def show
   end

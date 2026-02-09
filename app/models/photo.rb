@@ -15,5 +15,9 @@ class Photo < ApplicationRecord
   validates :description, length: { maximum: 500 }, presence: true
 
   # scopes
+  # get public photos from users followed by current user
   scope :public_photos, -> { where(photo_sharing: :public) }
+
+  scope :public_photos_from_following, ->(current_user) { where(photo_sharing: :public).where(user_id: current_user.following.select(:id))
+}
 end
