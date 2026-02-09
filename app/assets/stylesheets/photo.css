@@ -51,3 +51,9 @@
 form.row {
   flex: 0 !important;
 }
+
+.btn-cus {
+  --bs-btn-padding-y: 0.25rem;
+  --bs-btn-padding-x: 0.25rem;
+  --bs-btn-font-size: 0.75rem;
+}
