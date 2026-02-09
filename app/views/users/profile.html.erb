@@ -27,19 +27,19 @@
       class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 gap-md-4 text-secondary"
     >
       <%= link_to photos_tab_path, class: "text-decoration-none", data: { turbo_prefetch: false } do %>
-        <span class="fw-bold text-dark fs-5"><%= @user.photos_count %></span>
+        <span class="fw-bold text-dark fs-5"><%= @user.photos.size %></span>
         <span class="small text-secondary">PHOTOS</span>
       <% end %>
       <%= link_to albums_tab_path, class: "text-decoration-none", data: { turbo_prefetch: false } do %>
-        <span class="fw-bold text-dark fs-5"><%= @user.albums_count %></span>
+        <span class="fw-bold text-dark fs-5"><%= @user.albums.size %></span>
         <span class="small text-secondary">ALBUMS</span>
       <% end %>
       <a href="#" class="text-decoration-none">
-        <span class="fw-bold text-dark fs-5"><%= @user.following_count %></span>
+        <span class="fw-bold text-dark fs-5"><%= @user.following.size %></span>
         <span class="small text-secondary">FOLLOWINGS</span>
       </a>
       <a href="#" class="text-decoration-none">
-        <span class="fw-bold text-dark fs-5"><%= @user.followers_count %></span>
+        <span class="fw-bold text-dark fs-5"><%= @user.followers.size %></span>
         <span class="small text-secondary">FOLLOWERS</span>
       </a>
     </div>

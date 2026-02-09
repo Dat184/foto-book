@@ -3,7 +3,7 @@ class Photo < ApplicationRecord
   # config for carrierwave upload file
   mount_uploader :image, ImageUploader
 
-  belongs_to :user, counter_cache: true
+  belongs_to :user
 
   has_many :album_photos
   has_many :albums, through: :album_photos

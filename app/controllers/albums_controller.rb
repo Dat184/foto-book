@@ -1,6 +1,7 @@
 class AlbumsController < ApplicationController
   before_action :authenticate_user!, except: %i[ index show ]
   before_action :set_album, only: %i[ show edit update destroy ]
+  before_action :set_photos, only: %i[ new edit create update ]
 
   # GET /albums or /albums.json
   def index
@@ -77,6 +78,10 @@ class AlbumsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def album_params
-      params.expect(album: [ :title, :description, :album_sharing ])
+      params.expect(album: [ :title, :description, :album_sharing, photo_ids: [] ])
+    end
+
+    def set_photos
+      @photos = current_user.photos
     end
 end

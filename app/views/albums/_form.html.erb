@@ -2,7 +2,7 @@
   <h5 class="fw-bold"><%= album.persisted? ? "Edit Album" : "New Album" %></h5>
 </div>
 
-<%= form_with(model: album, class: "row") do |form| %>
+<%= form_with(model: album, class: "row", data: { turbo: false }) do |form| %>
   <div class="col-md-6 text-start">
     <div class="mb-3">
       <%= form.label :title, class: "form-label fw-bold" %>
@@ -31,6 +31,29 @@
     <div class="mb-3">
       <%= form.label :description, class: "form-label fw-bold" %>
       <%= form.text_area :description, class: "form-control description-input", placeholder: "Album Description" %>
+    </div>
+  </div>
+
+  <div class="col-12 text-start">
+    <div class="mb-3">
+      <%= form.label :photo_ids, "Photos", class: "form-label fw-bold" %>
+      <% if photos.present? %>
+        <div class="row">
+          <%= form.collection_check_boxes :photo_ids, photos, :id, :title do |box| %>
+            <div class="col-12 col-md-6 col-lg-4 mb-5">
+              <div class="form-check d-flex gap-sm-5 flex-sm-row flex-column">
+                <img src="<%= box.object.image.url %>" alt="<%= box.object.title %>" class="rounded image-item-album object-fit-cover">
+                <div class="form-check-content">
+                  <%= box.check_box class: "form-check-input" %>
+                  <%= box.label class: "form-check-label", style: "margin-bottom: 0;" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-muted">You do not have any photos yet.</p>
+      <% end %>
     </div>
   </div>
 
