@@ -38,7 +38,7 @@ const DeleteConfirmation = {
 
     // Show second confirmation
     const secondConfirm = confirm(
-      "FINAL WARNING: This action cannot be undone. Delete permanently?",
+      "This action cannot be undone. Delete permanently?",
     );
     if (!secondConfirm) return;
 
@@ -74,7 +74,7 @@ const DeleteConfirmation = {
 
     // Show second confirmation
     const secondConfirm = confirm(
-      "FINAL WARNING: This action cannot be undone. Delete permanently?",
+      "This action cannot be undone. Delete permanently?",
     );
     if (!secondConfirm) return;
 
