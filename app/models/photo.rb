@@ -3,16 +3,16 @@ class Photo < ApplicationRecord
   # config for carrierwave upload file
   mount_uploader :image, ImageUploader
 
-  belongs_to :user, counter_cache: true
+  belongs_to :user
 
   has_many :album_photos
   has_many :albums, through: :album_photos
 
   # validations
-  validates :title, presence: true
+  validates :title, presence: true, length: { maximum: 140 }
   validates :image, presence: true
   validates :photo_sharing, presence: true
-  validates :description, length: { maximum: 500 }, presence: true
+  validates :description, length: { maximum: 300 }, presence: true
 
   # scopes
   # get public photos from users followed by current user

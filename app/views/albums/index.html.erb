@@ -1,10 +1,10 @@
 <!-- Photo/Album Toggle -->
 <div class="d-flex justify-content-center mb-4">
   <div class="btn-group" role="group" aria-label="Content type toggle">
-    <%= link_to photos_path, class: "btn btn-outline-secondary" do %>
+    <%= link_to photos_path, class: "btn btn-outline-secondary", data: { turbo_prefetch: false } do %>
       PHOTO
     <% end %>
-    <%= link_to albums_path, class: "btn btn-primary", "aria-current": "page" do %>
+    <%= link_to albums_path, class: "btn btn-primary", "aria-current": "page", data: { turbo_prefetch: false } do %>
       ALBUM
     <% end %>
   </div>
@@ -12,11 +12,13 @@
 
 <div id="albums" class="row align-items-start h-auto gy-2">
   <% @albums.each do |album| %>
-    <div class="col-md-6 col-lg-4">
       <%= render album %>
-      <p>
-        <%= link_to "Show this album", album, class: "btn btn-sm btn-outline-primary" %>
-      </p>
-    </div>
   <% end %>
 </div>
+
+<% if @pagy.next.present? %>
+  <%= turbo_frame_tag :next_page, src: albums_path(page: @pagy.next, format: :turbo_stream), loading: :lazy %>
+<% end %>
+
+<!-- Album Modal -->
+<%= render 'album_modal' %>

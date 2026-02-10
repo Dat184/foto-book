@@ -4,8 +4,10 @@ import "controllers";
 
 import FlashToast from "flash_toast";
 import PhotoModal from "photo_modal";
+import AlbumModal from "album_modal";
 import DeleteConfirmation from "delete_confirmation";
 
 FlashToast.init();
 PhotoModal.init();
+AlbumModal.init();
 DeleteConfirmation.init();

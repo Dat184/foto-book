@@ -1,0 +1,45 @@
+<div class="modal fade" id="albumModal" tabindex="-1" aria-labelledby="albumModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold" id="albumModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="position-relative">
+          <!-- Album Images Carousel -->
+          <div class="album-images-container px-3">
+            <img src="" alt="Album Photo" class="w-100 album-modal-image" id="albumModalImage">
+          </div>
+
+          <!-- Navigation Arrows -->
+          <button 
+            type="button" 
+            class="btn btn-light position-absolute start-0 top-50 translate-middle-y ms-2 album-nav-btn album-nav-prev" 
+            id="albumNavPrev"
+            aria-label="Previous image"
+            style="display: none;">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-light position-absolute end-0 top-50 translate-middle-y me-2 album-nav-btn album-nav-next" 
+            id="albumNavNext"
+            aria-label="Next image"
+            style="display: none;">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+
+          <!-- Image Counter -->
+          <div class="position-absolute bottom-0 end-0 m-3 bg-dark bg-opacity-75 text-white px-3 py-2 rounded album-image-counter" style="font-size: 0.875rem; display: none;">
+            <span id="albumImageCurrent">1</span> / <span id="albumImageTotal">1</span>
+          </div>
+        </div>
+
+        <div class="p-4">
+          <p class="mb-0 text-start" id="albumModalDescription"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

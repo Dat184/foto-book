@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   def profile
     @user = current_user
     @is_my_profile = true
+    @active_tab = params[:tab] || "photos"
     render :profile
   end
 
@@ -24,6 +25,7 @@ class UsersController < ApplicationController
     else
       @is_my_profile = false
     end
+    @active_tab = params[:tab] || "photos"
     render :profile
   end
 
