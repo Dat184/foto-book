@@ -1,0 +1,9 @@
+<div id="photos" class="row align-items-start h-auto gy-2 my-2">
+  <% @photos.each do |photo| %>
+    <%= render 'photo' , photo: photo %>
+  <% end %>
+</div>
+
+<div class="mt-auto d-flex justify-content-center">
+  <%== @pagy.series_nav(:bootstrap)%>
+</div>

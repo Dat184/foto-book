@@ -2,7 +2,8 @@
   <h5 class="fw-bold"><%= photo.persisted? ? "Edit Photo" : "New Photo" %></h5>
 </div>
 
-<%= form_with(model: photo, html: { multipart: true }, class: "row") do |form| %>
+<% model_for_form = namespace.present? ? [namespace, photo] : photo %>
+<%= form_with(model: model_for_form, html: { multipart: true }, class: "row") do |form| %>
   <div class="col-md-6 text-start">
     <div class="mb-3">
       <%= form.label :title, class: "form-label fw-bold" %>
