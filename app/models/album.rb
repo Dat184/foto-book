@@ -3,7 +3,7 @@ class Album < ApplicationRecord
   # Lưu ý: dùng "prefix: true" thay vì "_prefix: true" (dù cả 2 đều chạy, nhưng prefix chuẩn hơn ở cú pháp mới)
   enum :album_sharing, { public: 0, private: 1 }, prefix: true
 
-  belongs_to :user
+  belongs_to :user, counter_cache: true
 
   has_many :album_photos
   has_many :photos, through: :album_photos

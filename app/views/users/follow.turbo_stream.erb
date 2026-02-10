@@ -9,3 +9,9 @@
     <%= @user.followers.size %>
   </template>
 </turbo-stream>
+
+<turbo-stream action="update" target="followings-count-<%= current_user.id %>">
+  <template>
+    <%= current_user.following.size %>
+  </template>
+</turbo-stream>

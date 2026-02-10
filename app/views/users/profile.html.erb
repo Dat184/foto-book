@@ -19,6 +19,8 @@
     <h1 class="fw-bold mb-2"><%= @user.firstName + " " + @user.lastName %></h1>
     <% photos_tab_path = @is_my_profile ? profile_path(tab: "photos") : public_profile_path(@user, tab: "photos") %>
     <% albums_tab_path = @is_my_profile ? profile_path(tab: "albums") : public_profile_path(@user, tab: "albums") %>
+    <% followings_tab_path = @is_my_profile ? profile_path(tab: "followings") : public_profile_path(@user, tab: "followings") %>
+    <% followers_tab_path = @is_my_profile ? profile_path(tab: "followers") : public_profile_path(@user, tab: "followers") %>
     <div
       class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 gap-md-4 text-secondary"
     >
@@ -30,14 +32,14 @@
         <span class="fw-bold text-dark fs-5"><%= @user.albums.size %></span>
         <span class="small text-secondary">ALBUMS</span>
       <% end %>
-      <a href="#" class="text-decoration-none">
-        <span class="fw-bold text-dark fs-5"><%= @user.following.size %></span>
+      <%= link_to followings_tab_path, class: "text-decoration-none", data: { turbo_prefetch: false } do %>
+        <span class="fw-bold text-dark fs-5" id="followings-count-<%= @user.id %>"><%= @user.following.size %></span>
         <span class="small text-secondary">FOLLOWINGS</span>
-      </a>
-      <a href="#" class="text-decoration-none">
+      <% end %>
+      <%= link_to followers_tab_path, class: "text-decoration-none", data: { turbo_prefetch: false } do %>
         <span class="fw-bold text-dark fs-5" id="followers-count-<%= @user.id %>"><%= @user.followers.size %></span>
         <span class="small text-secondary">FOLLOWERS</span>
-      </a>
+      <% end %>
     </div>
   </div>
 </div>
@@ -54,10 +56,15 @@
 <div
   class="row row-cols-lg-3 row-cols-md-2 row-cols-xl-4 row-cols-1 mt-5"
 >
-  <% if @active_tab == "albums" %>
-    <%= render partial: "albums/album_item", collection: @user.albums, as: :album, locals: { is_my_profile: @is_my_profile } %>
-  <% else %>
+  <% case @active_tab %>
+  <% when "albums" %>
+    <%= render partial: "albums/album_item", collection: @user.albums.includes(:photos), as: :album, locals: { is_my_profile: @is_my_profile } %>
+  <% when "photos" %>
     <%= render partial: "photos/photo_item", collection: @user.photos, as: :photo, locals: { is_my_profile: @is_my_profile } %>
+  <% when "followings" %>
+    <%= render partial: "user", collection: @user.following, as: :user, locals: { is_my_profile: @is_my_profile } %>
+  <% when "followers" %>
+    <%= render partial: "user", collection: @user.followers, as: :user, locals: { is_my_profile: @is_my_profile } %>
   <% end %>
 </div>
 
