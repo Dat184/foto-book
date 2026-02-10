@@ -1,6 +1,10 @@
 <nav class="navbar navbar-expand-lg bg-primary">
       <div class="container">
-        <%= link_to 'Fotobook', root_path, class: "navbar-brand text-light fw-bold fs-3", data: { turbo_prefetch: false } %>
+        <% if user_signed_in? && current_user.role_admin? %>
+          <%= link_to 'Fotobook Admin', admin_root_path, class: "navbar-brand text-light fw-bold fs-3", data: { turbo_prefetch: false } %>
+        <% else %>
+          <%= link_to 'Fotobook', root_path, class: "navbar-brand text-light fw-bold fs-3", data: { turbo_prefetch: false } %>
+        <% end %>
 
         <form class="d-flex me-auto col-md-5 col-4" role="search">
           <input
