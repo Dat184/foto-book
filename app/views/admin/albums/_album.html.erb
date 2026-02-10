@@ -1,3 +1,19 @@
-<div>
-    test
+<div class="col-12 col-lg-3 col-md-6">
+    <div class="row g-3 align-items-start h-100">
+        <div class="col-12">
+            <%= link_to edit_admin_album_path(album) do %>
+            <div class="ratio ratio-1x1 rounded overflow-hidden d-flex">
+                <img src="<%= album.photos.first.image_url if album.photos.any? %>" class="img-fluid object-fit-cover rounded"/>
+                <div class="d-flex flex-column justify-content-end pb-4">
+                    <div class="w-75 h-25 rounded mx-auto item-text d-flex flex-column justify-content-center">
+                      <h5 class="m-0 mx-2 one-line">
+                        <%= album.title %>
+                      </h5>
+                      <p class="m-0 d-none d-sm-block"><%= pluralize(album.photos.size, "Photo") %></p>
+                    </div>
+                </div>
+            </div>
+            <% end %>
+        </div>
+    </div>
 </div>
