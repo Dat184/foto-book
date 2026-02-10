@@ -35,14 +35,20 @@ class UsersController < ApplicationController
     unless current_user == @user || current_user.following.include?(@user)
       current_user.following << @user
     end
-    redirect_to public_profile_path(@user), notice: "You are now following #{@user.firstName}"
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to request.referer, notice: "You are now following #{@user.firstName}" }
+    end
   end
 
   # DELETE /users/:id/unfollow
   def unfollow
     @user = User.find(params[:id])
     current_user.following.delete(@user)
-    redirect_to public_profile_path(@user), notice: "You have unfollowed #{@user.firstName}"
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to request.referer, notice: "You have unfollowed #{@user.firstName}" }
+    end
   end
 
   # GET /users or /users.json

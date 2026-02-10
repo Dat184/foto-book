@@ -13,11 +13,7 @@
     <% if @is_my_profile %>
       <%= link_to "Edit Profile", edit_profile_path, class: "btn btn-outline-primary btn-sm rounded-pill px-3 fw-bold", data: { turbo_prefetch: false } %>
     <% else %>
-      <% if current_user.following.include?(@user) %>
-        <%= button_to "Unfollow", unfollow_user_path(@user), method: :delete, class: "btn btn-outline-secondary btn-sm rounded-pill px-3 fw-bold", data: { turbo_prefetch: false } %>
-      <% else %>
-        <%= button_to "Follow", follow_user_path(@user), method: :post, class: "btn btn-primary btn-sm rounded-pill px-3 fw-bold", data: { turbo_prefetch: false } %>
-      <% end %>
+      <%= render partial: "users/follow_button", locals: { user: @user } %>
     <% end %>
     </div>
     <h1 class="fw-bold mb-2"><%= @user.firstName + " " + @user.lastName %></h1>
@@ -39,7 +35,7 @@
         <span class="small text-secondary">FOLLOWINGS</span>
       </a>
       <a href="#" class="text-decoration-none">
-        <span class="fw-bold text-dark fs-5"><%= @user.followers.size %></span>
+        <span class="fw-bold text-dark fs-5" id="followers-count-<%= @user.id %>"><%= @user.followers.size %></span>
         <span class="small text-secondary">FOLLOWERS</span>
       </a>
     </div>
