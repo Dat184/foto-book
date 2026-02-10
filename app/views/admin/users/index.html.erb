@@ -21,7 +21,7 @@
           class="justify-content-center flex-lg-row d-flex flex-column gap-1"
         >
           <button class="btn btn-sm btn-success">Edit</button>
-          <button class="btn btn-sm btn-danger">Delete</button>
+          <%= button_to "Delete", admin_user_path(user), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
         </td>
       </tr>
       <% end %>

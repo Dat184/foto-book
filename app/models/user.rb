@@ -23,4 +23,6 @@ class User < ApplicationRecord
   has_many :albums
 
   validates :firstName, :lastName, presence: true
+
+  scope :role_user, -> { where(role: :user) }
 end
