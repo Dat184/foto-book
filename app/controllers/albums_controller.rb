@@ -5,7 +5,30 @@ class AlbumsController < ApplicationController
 
   # GET /albums or /albums.json
   def index
-    @albums = Album.all
+    @pagy, @albums = pagy(:countless, Album.public_albums.includes(:photos, :user).order(created_at: :desc), limit: 6)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
+  end
+
+  def feed
+    @pagy, @albums = pagy(:countless, Album.public_albums_from_following(current_user).includes(:photos, :user).order(created_at: :desc), limit: 6)
+
+    respond_to do |format|
+      format.html { render :index }
+      format.turbo_stream
+    end
+  end
+
+  def discovery
+    @pagy, @albums = pagy(:countless, Album.public_albums.includes(:photos, :user).order(created_at: :desc), limit: 6)
+
+    respond_to do |format|
+      format.html { render :index }
+      format.turbo_stream
+    end
   end
 
   # GET /albums/1 or /albums/1.json

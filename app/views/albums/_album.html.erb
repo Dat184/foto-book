@@ -2,7 +2,16 @@
   <div class="card h-100">
     <div class="row g-0 h-100">
         <div class="col-lg-6">
-          <div class="ratio ratio-1x1 rounded overflow-hidden d-flex">
+          <div 
+            class="ratio ratio-1x1 rounded overflow-hidden d-flex cursor-pointer"
+            role="button"
+            data-bs-toggle="modal"
+            data-bs-target="#albumModal"
+            data-album-title="<%= album.title %>"
+            data-album-description="<%= album.description %>"
+            data-album-images="<%= album.photos.map(&:image_url).to_json %>"
+            style="cursor: pointer;"
+          >
             <img
               src="<%= album.photos.first.image_url if album.photos.any? %>"
               class="img-fluid object-fit-cover rounded"

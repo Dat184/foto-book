@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   get "photos/feed" => "photos#feed", as: :photos_feed
   get "photos/discovery" => "photos#discovery", as: :photos_discovery
 
+  # albums routes
+  get "albums/feed" => "albums#feed", as: :albums_feed
+  get "albums/discovery" => "albums#discovery", as: :albums_discovery
+
   resources :albums
   resources :photos
   resources :users

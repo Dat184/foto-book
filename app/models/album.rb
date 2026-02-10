@@ -7,4 +7,12 @@ class Album < ApplicationRecord
 
   has_many :album_photos
   has_many :photos, through: :album_photos
+
+  validates :title, presence: true, length: { maximum: 140 }
+  validates :album_sharing, presence: true
+  validates :description, length: { maximum: 300 }, presence: true
+  validates :photos, presence: true
+
+  scope :public_albums, -> { where(album_sharing: :public) }
+  scope :public_albums_from_following, ->(current_user) { where(album_sharing: :public).where(user_id: current_user.following.select(:id)) }
 end

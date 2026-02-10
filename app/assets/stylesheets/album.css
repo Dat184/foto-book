@@ -9,3 +9,52 @@
   opacity: 0.9;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+/* Album Modal Styling */
+.album-images-container {
+  position: relative;
+  overflow: hidden;
+  background-color: #f8f9fa;
+}
+
+.album-modal-image {
+  display: block;
+  height: auto;
+  max-height: 600px;
+  object-fit: contain;
+}
+
+.album-nav-btn {
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  border: none !important;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.album-nav-btn:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 1) !important;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.album-nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.album-nav-btn i {
+  color: #333;
+}
+
+.album-image-counter {
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}

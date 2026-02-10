@@ -3,6 +3,7 @@
 pin "application"
 pin "flash_toast"
 pin "photo_modal"
+pin "album_modal"
 pin "delete_confirmation"
 pin "photo_selector"
 pin "@hotwired/turbo-rails", to: "turbo.min.js"

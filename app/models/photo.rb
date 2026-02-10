@@ -9,10 +9,10 @@ class Photo < ApplicationRecord
   has_many :albums, through: :album_photos
 
   # validations
-  validates :title, presence: true
+  validates :title, presence: true, length: { maximum: 140 }
   validates :image, presence: true
   validates :photo_sharing, presence: true
-  validates :description, length: { maximum: 500 }, presence: true
+  validates :description, length: { maximum: 300 }, presence: true
 
   # scopes
   # get public photos from users followed by current user
