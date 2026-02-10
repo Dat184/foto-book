@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   resources :albums
   resources :photos
-  resources :users
+  resources :users, only: [ :index, :create, :new ]
 
   namespace :admin do
     root "users#index"

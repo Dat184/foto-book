@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: %i[ show edit update destroy ]
-  before_action :authorize_user_edit!, only: %i[ edit update destroy ]
+  before_action :set_user, only: %i[update destroy ]
+  before_action :authorize_user_edit!, only: %i[update destroy ]
 
   # GET /profile
   def profile
@@ -49,24 +49,6 @@ class UsersController < ApplicationController
       format.turbo_stream
       format.html { redirect_to request.referer, notice: "You have unfollowed #{@user.firstName}" }
     end
-  end
-
-  # GET /users or /users.json
-  def index
-    @users = User.all
-  end
-
-  # GET /users/1 or /users/1.json
-  def show
-  end
-
-  # GET /users/new
-  def new
-    @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
   end
 
   # POST /users or /users.json
