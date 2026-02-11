@@ -17,14 +17,22 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(auth)
-    User.create(
-      email: auth.info.email,
-      f: auth.info.first_name,
-      last_name: auth.info.last_name,
-      provider: auth.provider,
-      uid: auth.uid,
-      password: Devise.friendly_token[0, 20]
-    )
+    user = User.find_by(provider: auth.provider, uid: auth.uid)
+    return user if user
+
+    email = auth.info.email
+    user = User.find_or_initialize_by(email: email)
+    user.provider = auth.provider
+    user.uid      = auth.uid
+    user.firstName = auth.info.first_name || "User" if user.firstName.blank?
+    user.lastName  = auth.info.last_name  || "Name"  if user.lastName.blank?
+    user.password = Devise.friendly_token[0, 20] if user.new_record?
+
+    # Skip email confirmation for OAuth users since the provider already verified the email
+    user.skip_confirmation! if user.respond_to?(:skip_confirmation!)
+
+    user.save!
+    user
   end
 
   # Custom message for inactive users
@@ -47,7 +55,5 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :firstName, presence: true
   validates :lastName, presence: true
-  validates :password, presence: true,
-                       length: { minimum: 6 }
   scope :role_user, -> { where(role: :user) }
 end
