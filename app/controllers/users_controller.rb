@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: %i[ show edit update destroy ]
-  before_action :authorize_user_edit!, only: %i[ edit update destroy ]
+  before_action :set_user, only: %i[update ]
+  before_action :authorize_user_edit!, only: %i[update ]
 
   # GET /profile
   def profile
@@ -35,32 +35,20 @@ class UsersController < ApplicationController
     unless current_user == @user || current_user.following.include?(@user)
       current_user.following << @user
     end
-    redirect_to public_profile_path(@user), notice: "You are now following #{@user.firstName}"
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to request.referer, notice: "You are now following #{@user.firstName}" }
+    end
   end
 
   # DELETE /users/:id/unfollow
   def unfollow
     @user = User.find(params[:id])
     current_user.following.delete(@user)
-    redirect_to public_profile_path(@user), notice: "You have unfollowed #{@user.firstName}"
-  end
-
-  # GET /users or /users.json
-  def index
-    @users = User.all
-  end
-
-  # GET /users/1 or /users/1.json
-  def show
-  end
-
-  # GET /users/new
-  def new
-    @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to request.referer, notice: "You have unfollowed #{@user.firstName}" }
+    end
   end
 
   # POST /users or /users.json
@@ -91,15 +79,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1 or /users/1.json
-  def destroy
-    @user.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to users_path, notice: "User was successfully destroyed.", status: :see_other }
-      format.json { head :no_content }
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

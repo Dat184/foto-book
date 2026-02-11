@@ -3,11 +3,22 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable
   enum :role, { user: 0, admin: 1 }, prefix: true
+  enum :status, { active: 0, inactive: 1 }, prefix: true
 
   mount_uploader :avatar, AvatarUploader
 
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
+  end
+
+  # Override Devise method to prevent inactive users from signing in
+  def active_for_authentication?
+    super && status_active?
+  end
+
+  # Custom message for inactive users
+  def inactive_message
+    status_inactive? ? :inactive_account : super
   end
 
   # Associations for follows
@@ -23,4 +34,6 @@ class User < ApplicationRecord
   has_many :albums
 
   validates :firstName, :lastName, presence: true
+
+  scope :role_user, -> { where(role: :user) }
 end

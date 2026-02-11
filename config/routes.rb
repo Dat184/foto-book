@@ -16,9 +16,17 @@ Rails.application.routes.draw do
   get "albums/feed" => "albums#feed", as: :albums_feed
   get "albums/discovery" => "albums#discovery", as: :albums_discovery
 
-  resources :albums
-  resources :photos
-  resources :users
+  resources :albums, only: [ :index, :new, :create, :edit, :update, :destroy ]
+  resources :photos, only: [ :index, :new, :create, :edit, :update, :destroy ]
+  resources :users, only: [ :index, :create, :new, :update ]
+
+  namespace :admin do
+    root "photos#index"
+    resources :photos, only: [ :index, :edit, :update ]
+    resources :albums, only: [ :index, :edit, :update ]
+    resources :users, only: [ :index, :edit, :update, :destroy ]
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

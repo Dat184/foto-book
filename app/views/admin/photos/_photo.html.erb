@@ -1,0 +1,18 @@
+<div class="col-12 col-lg-3 col-md-6">
+  <div class="row g-3 align-items-start h-100">
+    <div class="col-12">
+    <%= link_to edit_admin_photo_path(photo) do %>
+      <div class="ratio ratio-1x1">
+        <%= image_tag photo.image_url, class: "object-fit-cover rounded-2 w-100 h-100", alt: "Photo Image" %>
+        <div
+          class="w-100 h-auto bg-dark bg-opacity-50 justify-content-center"
+        >
+          <p class="mx-0 my-2 text-light fw-semibold text px-1">
+            <%= photo.title %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+    </div>
+  </div>
+</div>

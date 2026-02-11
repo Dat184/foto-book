@@ -39,11 +39,7 @@
             <% end %>
             <!-- Follow/Unfollow Button -->
             <% if action_name == "discovery" && current_user && current_user != album.user %>
-              <% if current_user && current_user.following.include?(album.user) %>
-                <%= button_to "Unfollow", unfollow_user_path(album.user), method: :delete, class: "btn btn-outline-secondary btn-cus rounded-pill", data: { turbo_prefetch: false } %>
-              <% else %>
-                <%= button_to "Follow", follow_user_path(album.user), method: :post, class: "btn btn-primary btn-cus rounded-pill", data: { turbo_prefetch: false } %>
-              <% end %>
+              <%= render partial: "users/follow_button", locals: { user: album.user } %>
             <% end %>
           </div>
           <!-- Title -->

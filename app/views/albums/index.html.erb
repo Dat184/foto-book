@@ -1,10 +1,10 @@
 <!-- Photo/Album Toggle -->
 <div class="d-flex justify-content-center mb-4">
   <div class="btn-group" role="group" aria-label="Content type toggle">
-    <%= link_to photos_path, class: "btn btn-outline-secondary", data: { turbo_prefetch: false } do %>
+    <%= link_to user_signed_in? ? photos_feed_path : photos_path, class: "btn btn-outline-secondary", data: { turbo_prefetch: false } do %>
       PHOTO
     <% end %>
-    <%= link_to albums_path, class: "btn btn-primary", "aria-current": "page", data: { turbo_prefetch: false } do %>
+    <%= link_to user_signed_in? ? albums_feed_path : albums_path, class: "btn btn-primary", "aria-current": "page", data: { turbo_prefetch: false } do %>
       ALBUM
     <% end %>
   </div>

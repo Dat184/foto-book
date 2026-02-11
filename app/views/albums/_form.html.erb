@@ -2,7 +2,8 @@
   <h5 class="fw-bold"><%= album.persisted? ? "Edit Album" : "New Album" %></h5>
 </div>
 
-<%= form_with(model: album, class: "row", data: { turbo: false }) do |form| %>
+<% model_for_form = local_assigns[:namespace] ? [namespace, album] : album %>
+<%= form_with(model: model_for_form, class: "row", data: { turbo: false }) do |form| %>
   <div class="col-md-6 text-start">
     <div class="mb-3">
       <%= form.label :title, class: "form-label fw-bold" %>

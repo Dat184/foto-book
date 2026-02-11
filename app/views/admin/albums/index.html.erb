@@ -1,0 +1,10 @@
+
+<div id="albums" class="row align-items-start h-auto gy-2 my-2">
+  <% @albums.each do |album| %>
+    <%= render 'album' , album: album %>
+  <% end %>
+</div>
+
+<div class="mt-auto d-flex justify-content-center">
+  <%== @pagy.series_nav(:bootstrap)%>
+</div>

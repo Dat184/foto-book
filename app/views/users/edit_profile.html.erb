@@ -2,4 +2,7 @@
     <%= stylesheet_link_tag "edit_user", "data-turbo-track": "reload" %>
 <% end %>
 
-<%= render "form", user: @user %>
+<div class="form-content">
+    <%= render "form", user: @user %>
+    <%= render "form_password", user: @user %>
+</div>

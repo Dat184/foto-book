@@ -1,0 +1,17 @@
+<turbo-stream action="replace" targets=".follow-button-user-<%= @user.id %>">
+  <template>
+    <%= render partial: "users/follow_button", formats: [:html], locals: { user: @user } %>
+  </template>
+</turbo-stream>
+
+<turbo-stream action="update" target="followers-count-<%= @user.id %>">
+  <template>
+    <%= @user.followers.size %>
+  </template>
+</turbo-stream>
+
+<turbo-stream action="update" target="followings-count-<%= current_user.id %>">
+  <template>
+    <%= current_user.following.size %>
+  </template>
+</turbo-stream>

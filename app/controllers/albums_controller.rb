@@ -1,11 +1,12 @@
 class AlbumsController < ApplicationController
-  before_action :authenticate_user!, except: %i[ index show ]
-  before_action :set_album, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: %i[ index ]
+  before_action :set_album, only: %i[ edit update destroy ]
   before_action :set_photos, only: %i[ new edit create update ]
+  LIMIT = 6
 
   # GET /albums or /albums.json
   def index
-    @pagy, @albums = pagy(:countless, Album.public_albums.includes(:photos, :user).order(created_at: :desc), limit: 6)
+    @pagy, @albums = pagy(:countless, Album.public_albums.includes(:photos, :user).order(created_at: :desc), limit: LIMIT)
 
     respond_to do |format|
       format.html
@@ -14,7 +15,7 @@ class AlbumsController < ApplicationController
   end
 
   def feed
-    @pagy, @albums = pagy(:countless, Album.public_albums_from_following(current_user).includes(:photos, :user).order(created_at: :desc), limit: 6)
+    @pagy, @albums = pagy(:countless, Album.public_albums_from_following(current_user).includes(:photos, :user).order(created_at: :desc), limit: LIMIT)
 
     respond_to do |format|
       format.html { render :index }
@@ -23,7 +24,7 @@ class AlbumsController < ApplicationController
   end
 
   def discovery
-    @pagy, @albums = pagy(:countless, Album.public_albums.includes(:photos, :user).order(created_at: :desc), limit: 6)
+    @pagy, @albums = pagy(:countless, Album.public_albums.includes(:photos, :user).order(created_at: :desc), limit: LIMIT)
 
     respond_to do |format|
       format.html { render :index }
@@ -31,9 +32,6 @@ class AlbumsController < ApplicationController
     end
   end
 
-  # GET /albums/1 or /albums/1.json
-  def show
-  end
 
   # GET /albums/new
   def new
@@ -77,7 +75,6 @@ class AlbumsController < ApplicationController
   # DELETE /albums/1 or /albums/1.json
   def destroy
     @album.destroy!
-
     respond_to do |format|
       format.html { redirect_to profile_path(tab: "albums"), notice: "Album was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
