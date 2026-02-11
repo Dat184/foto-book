@@ -33,7 +33,10 @@ class User < ApplicationRecord
   # Association for albums
   has_many :albums
 
-  validates :firstName, :lastName, presence: true
-
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :firstName, presence: true
+  validates :lastName, presence: true
+  validates :password, presence: true,
+                       length: { minimum: 6 }
   scope :role_user, -> { where(role: :user) }
 end
