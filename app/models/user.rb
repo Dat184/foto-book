@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable, :omniauthable, omniauth_providers: [ :google_oauth2, :facebook ]
   enum :role, { user: 0, admin: 1 }, prefix: true
   enum :status, { active: 0, inactive: 1 }, prefix: true
 
@@ -14,6 +14,17 @@ class User < ApplicationRecord
   # Override Devise method to prevent inactive users from signing in
   def active_for_authentication?
     super && status_active?
+  end
+
+  def self.from_omniauth(auth)
+    User.create(
+      email: auth.info.email,
+      f: auth.info.first_name,
+      last_name: auth.info.last_name,
+      provider: auth.provider,
+      uid: auth.uid,
+      password: Devise.friendly_token[0, 20]
+    )
   end
 
   # Custom message for inactive users
