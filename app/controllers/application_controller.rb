@@ -14,4 +14,8 @@ class ApplicationController < ActionController::Base
   def layout_by_resource
     devise_controller? ? "auth" : "application"
   end
+
+  def authorize_admin!
+    redirect_to root_path, alert: "Not authorized" unless current_user&.role_admin?
+  end
 end

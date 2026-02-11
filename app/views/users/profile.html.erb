@@ -25,11 +25,13 @@
       class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 gap-md-4 text-secondary"
     >
       <%= link_to photos_tab_path, class: "text-decoration-none", data: { turbo_prefetch: false } do %>
-        <span class="fw-bold text-dark fs-5"><%= @user.photos.size %></span>
+        <% count_photos = @is_my_profile ? @user.photos.size : @user.photos.public_photos.size %>
+        <span class="fw-bold text-dark fs-5"><%= count_photos %></span>
         <span class="small text-secondary">PHOTOS</span>
       <% end %>
       <%= link_to albums_tab_path, class: "text-decoration-none", data: { turbo_prefetch: false } do %>
-        <span class="fw-bold text-dark fs-5"><%= @user.albums.size %></span>
+        <% count_albums = @is_my_profile ? @user.albums.size : @user.albums.public_albums.size %>
+        <span class="fw-bold text-dark fs-5"><%= count_albums %></span>
         <span class="small text-secondary">ALBUMS</span>
       <% end %>
       <%= link_to followings_tab_path, class: "text-decoration-none", data: { turbo_prefetch: false } do %>
@@ -58,9 +60,11 @@
 >
   <% case @active_tab %>
   <% when "albums" %>
-    <%= render partial: "albums/album_item", collection: @user.albums.includes(:photos), as: :album, locals: { is_my_profile: @is_my_profile } %>
+    <% query_for_albums = @is_my_profile ? @user.albums.includes(:photos) : @user.albums.public_albums.includes(:photos) %>
+    <%= render partial: "albums/album_item", collection: query_for_albums, as: :album, locals: { is_my_profile: @is_my_profile } %>
   <% when "photos" %>
-    <%= render partial: "photos/photo_item", collection: @user.photos, as: :photo, locals: { is_my_profile: @is_my_profile } %>
+    <% query_for_photos = @is_my_profile ? @user.photos : @user.photos.public_photos %>
+    <%= render partial: "photos/photo_item", collection: query_for_photos, as: :photo, locals: { is_my_profile: @is_my_profile } %>
   <% when "followings" %>
     <%= render partial: "user", collection: @user.following, as: :user, locals: { is_my_profile: @is_my_profile } %>
   <% when "followers" %>

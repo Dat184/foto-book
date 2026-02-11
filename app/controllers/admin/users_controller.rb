@@ -1,6 +1,7 @@
 module Admin
   class UsersController < ApplicationController
     before_action :set_user, only: %i[ destroy edit update ]
+    before_action :authorize_admin!
     def index
       @pagy, @users = pagy(User.role_user.order(created_at: :desc), limit: 10)
     end

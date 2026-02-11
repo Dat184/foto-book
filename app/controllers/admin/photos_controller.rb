@@ -1,6 +1,7 @@
 module Admin
   class PhotosController < ApplicationController
     before_action :set_photo, only: %i[ edit update ]
+    before_action :authorize_admin!
 
     def index
       @pagy, @photos = pagy(Photo.order(created_at: :desc), limit: 12)

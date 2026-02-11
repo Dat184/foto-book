@@ -1,11 +1,11 @@
 class PhotosController < ApplicationController
-  before_action :authenticate_user!, except: %i[ index show ]
-  before_action :set_photo, only: %i[ show edit update destroy ]
-
+  before_action :authenticate_user!, except: %i[ index ]
+  before_action :set_photo, only: %i[ edit update destroy ]
+  LIMIT = 10
   # GET /photos or /photos.json
   def index
     # @pagy, @photos = pagy(:countless, Photo.public_photos_from_following(current_user).includes(:user).order(created_at: :desc), limit: 10)
-    @pagy, @photos = pagy(:countless, Photo.public_photos.includes(:user).order(created_at: :desc), limit: 10)
+    @pagy, @photos = pagy(:countless, Photo.public_photos.includes(:user).order(created_at: :desc), limit: LIMIT)
 
     respond_to do |format|
       format.html
@@ -14,7 +14,7 @@ class PhotosController < ApplicationController
   end
 
   def feed
-    @pagy, @photos = pagy(:countless, Photo.public_photos_from_following(current_user).includes(:user).order(created_at: :desc), limit: 10)
+    @pagy, @photos = pagy(:countless, Photo.public_photos_from_following(current_user).includes(:user).order(created_at: :desc), limit: LIMIT)
 
     respond_to do |format|
       format.html { render :index }
@@ -23,15 +23,12 @@ class PhotosController < ApplicationController
   end
 
   def discovery
-    @pagy, @photos = pagy(:countless, Photo.public_photos.includes(:user).order(created_at: :desc), limit: 10)
+    @pagy, @photos = pagy(:countless, Photo.public_photos.includes(:user).order(created_at: :desc), limit: LIMIT)
 
     respond_to do |format|
       format.html { render :index }
       format.turbo_stream
     end
-  end
-  # GET /photos/1 or /photos/1.json
-  def show
   end
 
   # GET /photos/new

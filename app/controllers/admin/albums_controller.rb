@@ -2,6 +2,7 @@ module Admin
   class AlbumsController < ApplicationController
     before_action :set_album, only: %i[ edit update ]
     before_action :set_photos, only: %i[ edit update ]
+    before_action :authorize_admin!
 
     def index
       @pagy, @albums = pagy(Album.includes(:photos).order(created_at: :desc), limit: 12)
