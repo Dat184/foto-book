@@ -24,3 +24,5 @@ services:
         value: "true"
       - key: SECRET_KEY_BASE
         generateValue: true
+      - key: WEB_CONCURRENCY
+        value: "0"
