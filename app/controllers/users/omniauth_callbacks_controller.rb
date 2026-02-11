@@ -5,9 +5,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     handle_auth "Google"
   end
 
-  # def facebook
-  #   handle_auth "Facebook"
-  # end
+  def facebook
+    handle_auth "Facebook"
+  end
+
+  def twitter
+    handle_auth "X"
+  end
 
   def failure
     redirect_to root_path

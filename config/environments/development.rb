@@ -10,6 +10,9 @@ Rails.application.configure do
     Bullet.add_footer    = true
   end
 
+  # config ngrok domain for omniauth callback
+  config.hosts << /.*\.ngrok-free\.app/
+  OmniAuth.config.full_host = ENV["OMNIAUTH_FULL_HOST"]
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Make code changes take effect immediately without server restart.

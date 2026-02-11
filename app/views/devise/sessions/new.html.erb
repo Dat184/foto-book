@@ -28,10 +28,10 @@
   <%= button_to user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false }, class: "btn btn-white text-black w-75 btn-outline-dark" do %>
     <i class="fa-brands fa-google"></i> Login with Google
   <% end %>
-  <%= button_to user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false }, class: "btn btn-primary text-white w-75" do %>
+  <%= button_to user_facebook_omniauth_authorize_path, method: :post, data: { turbo: false }, class: "btn btn-primary text-white w-75" do %>
     <i class="fa-brands fa-facebook"></i> Login with Facebook
   <% end %>
-  <%= button_to user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false }, class: "btn btn-info text-white w-75" do %>
+  <%= button_to user_twitter_omniauth_authorize_path, method: :post, data: { turbo: false }, class: "btn btn-info text-white w-75" do %>
     <i class="fa-brands fa-twitter"></i> Login with Twitter
   <% end %>
 </div>
