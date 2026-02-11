@@ -1,42 +1,30 @@
-<%= form_with(model: user) do |form| %>
-  <% if user.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-        <% user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div>
-    <%= form.label :firstName, style: "display: block" %>
-    <%= form.text_field :firstName %>
+<%= form_with(model: user, html: { class: "d-flex flex-column align-items-center" }) do |form| %>
+  <div class="avatar mb-3 position-relative" data-controller="image-preview">
+    <label for="avatar-input" style="cursor: pointer; display: block; width: 100%; height: 100%;">
+      <%= image_tag avatar_url(user), class: "object-fit-cover rounded-2 w-100 h-100", alt: "Profile Avatar", data: { image_preview_target: "output" } %>
+    </label>
+    <%= form.file_field :avatar, id: "avatar-input", class: "d-none", accept: "image/*", data: { image_preview_target: "input", action: "change->image-preview#preview" } %>
+  </div>
+  <h2 class="fw-bold fs-6 text-primary">Basic Information</h2>
+  <div class="mb-1 d-flex flex-column align-items-start">
+    <%= form.label :firstName %>
+    <%= form.text_field :firstName, class: "form-control", autofocus: true %>
   </div>
 
-  <div>
-    <%= form.label :lastName, style: "display: block" %>
-    <%= form.text_field :lastName %>
+  
+
+  <div class="mb-1 d-flex flex-column align-items-start">
+    <%= form.label :lastName %>
+    <%= form.text_field :lastName, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
+  <div class="mb-1 d-flex flex-column align-items-start">
+    <%= form.label :email %>
+    <%= form.text_field :email, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :password, style: "display: block" %>
-    <%= form.text_field :password %>
-  </div>
 
   <div>
-    <%= form.label :following, style: "display: block" %>
-    <%= form.text_field :following%>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-success mt-3", value: "Save" %>
   </div>
 <% end %>

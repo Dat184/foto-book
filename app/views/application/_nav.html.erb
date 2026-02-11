@@ -30,17 +30,25 @@
                 </div>
                 <div class="offcanvas-body">
                   <ul class="navbar-nav flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#"
-                        >Feeds</a
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">My Photos</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">My Albums</a>
-                    </li>
+                    <% if current_user.role_admin? %>
+                      <li class="nav-item">
+                        <%= link_to 'Manage Photos', admin_photos_path, class: "nav-link ", "aria-current": "page", data: { turbo_prefetch: false } %>
+                      </li>
+                      <li class="nav-item">
+                        <%= link_to 'Manage Albums', admin_albums_path, class: "nav-link ", "aria-current": "page", data: { turbo_prefetch: false } %>
+                      </li>
+                      <li class="nav-item">
+                        <%= link_to 'Manage Users', admin_users_path, class: "nav-link ", "aria-current": "page", data: { turbo_prefetch: false } %>
+                      </li>
+                        
+                    <% else %>
+                      <li class="nav-item">
+                        <%= link_to 'Feeds', controller_name == "photos" ? photos_feed_path : albums_feed_path, class: "nav-link active", "aria-current": "page", data: { turbo_prefetch: false } %>
+                      </li>
+                      <li class="nav-item">
+                        <%= link_to 'Discovery', controller_name == "photos" ? photos_discovery_path : albums_discovery_path, class: "nav-link", data: { turbo_prefetch: false } %>
+                      </li>
+                    <% end %>
                   </ul>
                 </div>
               </div>

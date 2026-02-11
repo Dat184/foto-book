@@ -36,7 +36,10 @@
         </div>
       </div>
     </div>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    
+    <%# Flash Toasts %>
+    <% if notice.present? || alert.present? %>
+      <%= render "application/toast" %>
+    <% end %>
   </body>
 </html>

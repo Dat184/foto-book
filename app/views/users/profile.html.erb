@@ -1,0 +1,77 @@
+<div
+  class="content d-flex flex-column flex-md-row w-100 align-items-center text-center text-md-start"
+>
+  <div
+    class="col-md-3 d-flex flex-column align-items-center mb-4 mb-md-0 me-md-4"
+  >
+    <%= image_tag avatar_url(@user), class: "rounded-circle object-fit-cover", style: "width: 120px; height: 120px", alt: "Profile Avatar" %>
+  </div>
+  <div class="w-100">
+    <div
+      class="d-flex align-items-center justify-content-center justify-content-md-start mb-2"
+    >
+    <% if @is_my_profile %>
+      <%= link_to "Edit Profile", edit_profile_path, class: "btn btn-outline-primary btn-sm rounded-pill px-3 fw-bold", data: { turbo_prefetch: false } %>
+    <% else %>
+      <%= render partial: "users/follow_button", locals: { user: @user } %>
+    <% end %>
+    </div>
+    <h1 class="fw-bold mb-2"><%= @user.firstName + " " + @user.lastName %></h1>
+    <% photos_tab_path = @is_my_profile ? profile_path(tab: "photos") : public_profile_path(@user, tab: "photos") %>
+    <% albums_tab_path = @is_my_profile ? profile_path(tab: "albums") : public_profile_path(@user, tab: "albums") %>
+    <% followings_tab_path = @is_my_profile ? profile_path(tab: "followings") : public_profile_path(@user, tab: "followings") %>
+    <% followers_tab_path = @is_my_profile ? profile_path(tab: "followers") : public_profile_path(@user, tab: "followers") %>
+    <div
+      class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 gap-md-4 text-secondary"
+    >
+      <%= link_to photos_tab_path, class: "text-decoration-none", data: { turbo_prefetch: false } do %>
+        <% count_photos = @is_my_profile ? @user.photos.size : @user.photos.public_photos.size %>
+        <span class="fw-bold text-dark fs-5"><%= count_photos %></span>
+        <span class="small text-secondary">PHOTOS</span>
+      <% end %>
+      <%= link_to albums_tab_path, class: "text-decoration-none", data: { turbo_prefetch: false } do %>
+        <% count_albums = @is_my_profile ? @user.albums.size : @user.albums.public_albums.size %>
+        <span class="fw-bold text-dark fs-5"><%= count_albums %></span>
+        <span class="small text-secondary">ALBUMS</span>
+      <% end %>
+      <%= link_to followings_tab_path, class: "text-decoration-none", data: { turbo_prefetch: false } do %>
+        <span class="fw-bold text-dark fs-5" id="followings-count-<%= @user.id %>"><%= @user.following.size %></span>
+        <span class="small text-secondary">FOLLOWINGS</span>
+      <% end %>
+      <%= link_to followers_tab_path, class: "text-decoration-none", data: { turbo_prefetch: false } do %>
+        <span class="fw-bold text-dark fs-5" id="followers-count-<%= @user.id %>"><%= @user.followers.size %></span>
+        <span class="small text-secondary">FOLLOWERS</span>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% if @is_my_profile %>
+  <% if @active_tab == "albums" %>
+    <%= link_to "Add album", new_album_path, class: "mt-5 align-self-md-end align-self-center btn btn-success rounded-pill btn-add-photos", data: { turbo_prefetch: false } %>
+  <% else %>
+    <%= link_to "Add photos", new_photo_path, class: "mt-5 align-self-md-end align-self-center btn btn-success rounded-pill btn-add-photos", data: { turbo_prefetch: false } %>
+  <% end %>
+<% end %>
+
+<%# body content here %>
+<div
+  class="row row-cols-lg-3 row-cols-md-2 row-cols-xl-4 row-cols-1 mt-5"
+>
+  <% case @active_tab %>
+  <% when "albums" %>
+    <% query_for_albums = @is_my_profile ? @user.albums.includes(:photos) : @user.albums.public_albums.includes(:photos) %>
+    <%= render partial: "albums/album_item", collection: query_for_albums, as: :album, locals: { is_my_profile: @is_my_profile } %>
+  <% when "photos" %>
+    <% query_for_photos = @is_my_profile ? @user.photos : @user.photos.public_photos %>
+    <%= render partial: "photos/photo_item", collection: query_for_photos, as: :photo, locals: { is_my_profile: @is_my_profile } %>
+  <% when "followings" %>
+    <%= render partial: "user", collection: @user.following, as: :user, locals: { is_my_profile: @is_my_profile } %>
+  <% when "followers" %>
+    <%= render partial: "user", collection: @user.followers, as: :user, locals: { is_my_profile: @is_my_profile } %>
+  <% end %>
+</div>
+
+
+<%= render 'photos/photo_modal' %>
+<%= render 'albums/album_modal' %>

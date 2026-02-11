@@ -1,0 +1,37 @@
+<div class="col mt-3">
+  <div class="position-relative">
+    <div 
+      class="ratio ratio-1x1 rounded overflow-hidden d-flex"
+      role="button"
+      data-bs-toggle="modal"
+      data-bs-target="#albumModal"
+      data-album-title="<%= album.title %>"
+      data-album-description="<%= album.description %>"
+      data-album-images="<%= album.photos.map(&:image_url).to_json %>"
+      style="cursor: pointer;"
+    >
+      <img
+        src="<%= album.photos.first.image_url if album.photos.any? %>"
+        class="img-fluid object-fit-cover rounded"
+      />
+      <div class="d-flex flex-column justify-content-end pb-4">
+        <div
+          class="w-75 h-25 rounded mx-auto item-text d-flex flex-column justify-content-center"
+        >
+          <h5 class="m-0 mx-2 one-line">
+            <%= album.title %>
+          </h5>
+          <p class="m-0 d-none d-sm-block"><%= pluralize(album.photos.size, "Photo") %></p>
+        </div>
+      </div>
+    </div>
+    <% if album.album_sharing_private? %>
+      <i class="fa-solid fa-lock position-absolute top-0 end-0 m-2 p-1 bg-dark rounded-circle text-white fs-6"></i>
+    <% end %>
+    <% if is_my_profile %>
+      <%= link_to 'edit', edit_album_path(album), class: "position-absolute bottom-0 end-0 rounded-pill px-2 m-2 fw-bold bg-light bg-opacity-50 text-decoration-none text-dark", data: { turbo_prefetch: false } %>
+    <% end %>
+  </div>
+</div>
+
+

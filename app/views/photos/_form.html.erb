@@ -1,27 +1,62 @@
-<%= form_with(model: photo) do |form| %>
-  <% if photo.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(photo.errors.count, "error") %> prohibited this photo from being saved:</h2>
+<div class="border-bottom pb-2 my-4 text-start">
+  <h5 class="fw-bold"><%= photo.persisted? ? "Edit Photo" : "New Photo" %></h5>
+</div>
 
-      <ul>
-        <% photo.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<% model_for_form = local_assigns[:namespace] ? [namespace, photo] : photo %>
+<%= form_with(model: model_for_form, html: { multipart: true }, class: "row") do |form| %>
+  <div class="col-md-6 text-start">
+    <div class="mb-3">
+      <%= form.label :title, class: "form-label fw-bold" %>
+      <%= form.text_field :title, class: "form-control", placeholder: "Photos Title" %>
     </div>
-  <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+    <div class="mb-3">
+      <%= form.label :photo_sharing, class: "form-label fw-bold" %>
+      <%= form.select :photo_sharing,
+        options_for_select(
+          [["Public", "public"], ["Private", "private"]],
+          photo.photo_sharing
+        ),
+        {},
+        class: "form-select" %>
+    </div>
+
+    <div class="mb-3 mt-4" data-controller="image-preview">
+      <%= form.file_field :image, accept: "image/*",
+        data: {
+          image_preview_target: "input",
+          action: "change->image-preview#preview"
+        } %>
+      <%= form.hidden_field :image_cache %>
+      <%= image_tag(
+        photo.image.url || "",
+        class: "img-fluid mt-2",
+        data: { image_preview_target: "output" },
+        style: photo.image.present? ? "" : "display: none;"
+      ) %>
+    </div>
+
+    
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.textarea :description %>
+    
+
+  <div class="col-md-6 text-start">
+    <div class="mb-3">
+      <%= form.label :description, class: "form-label fw-bold" %>
+      <%= form.text_area :description, class: "form-control description-input", placeholder: "Photo Description" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="col-12">
+    <%= form.submit "Save", class: "btn btn-success px-4 fw-bold" %>
+  </div>
+<% end %>
+
+<% if photo.persisted? %>
+  <div class="photo-form-actions">
+    <%= button_to "Delete", photo_path(photo), method: :delete, 
+        form: { data: { turbo: "false", double_confirm: "true" } },
+        class: "btn btn-danger px-3 fw-bold mt-3" %>
   </div>
 <% end %>

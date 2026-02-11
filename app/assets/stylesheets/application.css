@@ -75,5 +75,8 @@ body {
   }
 }
 
-/* Import users.css cho trang users */
-@import url('users.css');
+/* Import users.css cho trang users
+@import url("users.css");
+
+/* Import photo.css cho photo cards */
+/* @import url("photo.css"); */

@@ -1,0 +1,22 @@
+/* photos */
+.photos {
+  height: 250px;
+  width: 250px;
+  border-radius: 8px;
+}
+
+.photo-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+@media (max-width: 370px) {
+  .photos {
+    height: 150px;
+    width: 150px;
+  }
+}
+
+.btn-add-photos {
+  width: 8rem;
+}

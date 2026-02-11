@@ -1,16 +1,23 @@
-<p style="color: green"><%= notice %></p>
+<!-- Photo/Album Toggle -->
+<div class="d-flex justify-content-center mb-4">
+  <div class="btn-group" role="group" aria-label="Content type toggle">
+    <%= link_to user_signed_in? ? photos_feed_path : photos_path, class: "btn btn-primary", "aria-current": "page", data: { turbo_prefetch: false } do %>
+      PHOTO
+    <% end %>
+    <%= link_to user_signed_in? ? albums_feed_path : albums_path, class: "btn btn-outline-secondary", data: { turbo_prefetch: false } do %>
+      ALBUM
+    <% end %>
+  </div>
+</div>
 
-<% content_for :title, "Photos" %>
-
-<h1>Photos</h1>
-
-<div id="photos">
+<div id="photos" class="row align-items-start h-auto gy-2">
   <% @photos.each do |photo| %>
     <%= render photo %>
-    <p>
-      <%= link_to "Show this photo", photo %>
-    </p>
   <% end %>
 </div>
 
-<%= link_to "New photo", new_photo_path %>
+<% if @pagy.next.present? %>
+  <%= turbo_frame_tag :next_page, src: photos_path(page: @pagy.next, format: :turbo_stream), loading: :lazy %>
+<% end %>
+
+<%= render 'photo_modal' %>

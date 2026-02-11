@@ -1,27 +1,72 @@
-<%= form_with(model: album) do |form| %>
-  <% if album.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(album.errors.count, "error") %> prohibited this album from being saved:</h2>
+<div class="border-bottom pb-2 my-4 text-start">
+  <h5 class="fw-bold"><%= album.persisted? ? "Edit Album" : "New Album" %></h5>
+</div>
 
-      <ul>
-        <% album.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<% model_for_form = local_assigns[:namespace] ? [namespace, album] : album %>
+<%= form_with(model: model_for_form, class: "row", data: { turbo: false }) do |form| %>
+  <div class="col-md-6 text-start">
+    <div class="mb-3">
+      <%= form.label :title, class: "form-label fw-bold" %>
+      <%= form.text_field :title, class: "form-control", placeholder: "Album Title" %>
     </div>
-  <% end %>
+    
+    <div class="mb-3">
+      <div class="mb-3">
+        <%= form.label :album_sharing, class: "form-label fw-bold" %>
+        <%= form.select :album_sharing,
+          options_for_select(
+            [["Public", "public"], ["Private", "private"]],
+            album.album_sharing
+          ),
+          {},
+          class: "form-select" %>
+        </div>
+    </div>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+    
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.textarea :description %>
+  
+
+  <div class="col-md-6 text-start">
+    <div class="mb-3">
+      <%= form.label :description, class: "form-label fw-bold" %>
+      <%= form.text_area :description, class: "form-control description-input", placeholder: "Album Description" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="col-12 text-start">
+    <div class="mb-3">
+      <%= form.label :photo_ids, "Photos", class: "form-label fw-bold" %>
+      <% if photos.present? %>
+        <div class="row">
+          <%= form.collection_check_boxes :photo_ids, photos, :id, :title do |box| %>
+            <div class="col-12 col-md-6 col-lg-4 mb-5">
+              <div class="form-check d-flex gap-sm-5 flex-sm-row flex-column">
+                <img src="<%= box.object.image.url %>" alt="<%= box.object.title %>" class="rounded image-item-album object-fit-cover">
+                <div class="form-check-content">
+                  <%= box.check_box class: "form-check-input" %>
+                  <%= box.label class: "form-check-label", style: "margin-bottom: 0;" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-muted">You do not have any photos yet.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <%= form.submit "Save", class: "btn btn-success px-4 fw-bold" %>
+  </div>
+<% end %>
+
+<% if album.persisted? %>
+  <div class="photo-form-actions">
+    <%= button_to "Delete", album_path(album), method: :delete, 
+        form: { data: { turbo: "false", double_confirm: "true" } },
+        class: "btn btn-danger px-3 fw-bold mt-3" %>
   </div>
 <% end %>
