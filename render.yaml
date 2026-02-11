@@ -22,3 +22,5 @@ services:
         sync: false
       - key: SOLID_QUEUE_IN_PUMA
         value: "true"
+      - key: SECRET_KEY_BASE
+        generateValue: true
